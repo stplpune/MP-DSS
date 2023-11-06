@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, Component } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FormBuilder } from '@angular/forms';
 import ImageViewer from 'awesome-image-viewer';
@@ -9,7 +9,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
 import {MatInputModule} from '@angular/material/input';
 import {MatDatepickerModule} from '@angular/material/datepicker';
-import {  MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
+import {  DateAdapter, MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
 import {MatButtonModule} from '@angular/material/button';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatIconModule} from '@angular/material/icon';
@@ -52,6 +52,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
       transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
     ]),
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AiTollVerificationComponent {
 
@@ -83,9 +84,10 @@ export class AiTollVerificationComponent {
     private datePipe: DatePipe,
     private spinner: NgxSpinnerService,
     private errorService: ErrorsService,
-    public Validation:ValidationService
+    public Validation:ValidationService,
+    private dateAdapter: DateAdapter<Date>
   ) {
-
+    this.dateAdapter.setLocale('en-GB');
   }
 
   ngOnInit() {

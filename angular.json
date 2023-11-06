@@ -5,6 +5,7 @@
   "projects": {
     "MP-DSS": {
       "projectType": "application",
+
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss",
