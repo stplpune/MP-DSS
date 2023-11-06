@@ -1,1 +1,72 @@
-<p>login works!</p>
+<div class="login-wrapper">
+  <div class="container">
+      <div class="row justify-content-center">
+          <div class="col-sm-4">
+              <div class="card">
+                  <div class="card-header border-0 bg-transparent p-2">
+                      <h4 class="text-center border-bottom pb-2 mb-0 ">Login</h4>
+
+                  </div>
+                  <div class="card-body pt-2 p-3">
+                      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="form-container text-start">
+                          <div class="mb-0">
+                              <label class="form-label">User Name</label>
+                              <mat-form-field class="w-100" appearance="outline" autocomplete="off">
+                                  <input matInput autofocus placeholder="User Name" maxlength="30"
+                                      formControlName="userName">
+                                  <mat-error class="text-danger">
+                                      <span *ngIf="loginFC['userName'].hasError('required')">Please Enter User
+                                          Name</span>
+                                  </mat-error>
+                              </mat-form-field>
+                          </div>
+                          <div class="mb-0">
+                              <label class="form-label">Password</label>
+                              <mat-form-field class="w-100" appearance="outline">
+                                  <input matInput [type]="hide ? 'password':'text'" placeholder="Password"
+                                      formControlName="password">
+                                  <button mat-icon-button matSuffix (click)="hide = !hide"
+                                      [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                                      <mat-icon class="material-symbols-rounded">{{hide ? 'visibility_off' :
+                                          'visibility'}}</mat-icon>
+                                  </button>
+                                  <mat-error class="text-danger">
+                                      <span *ngIf="loginFC['password'].hasError('required')">Please Enter
+                                          Password</span>
+                                      <span *ngIf="loginFC['password'].hasError('pattern')">Please Enter Valid
+                                          Password</span>
+                                  </mat-error>
+                              </mat-form-field>
+                          </div>
+                          <div class="row g-3">
+                              <div class="col-sm-6">
+                                  <div class="d-flex gap-2">
+                                      <div id="captcha"></div>
+                                      <button mat-flat-button type="button" (click)="generateCaptcha()"
+                                          class="btn-main btn-icon">
+                                          <mat-icon class="material-symbols-rounded">
+                                              autorenew
+                                          </mat-icon>
+                                      </button>
+                                  </div>
+                              </div>
+                              <div class="col-sm-6">
+                                  <mat-form-field class="w-100" appearance="outline" autocomplete="off">
+                                      <input matInput placeholder="Enter Captcha" maxlength="4"
+                                          formControlName="captcha">
+                                      <mat-error class="text-danger">
+                                          <span *ngIf="loginFC['captcha'].hasError('required')">Please Enter
+                                              Captcha</span>
+                                          <span></span>
+                                      </mat-error>
+                                  </mat-form-field>
+                              </div>
+                          </div>
+                          <button mat-flat-button type="submit" class="w-100 btn-main fs-main"> Login </button>
+                      </form>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

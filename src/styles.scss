@@ -434,3 +434,15 @@ button.btn-modal-close {
     border-radius: 3px;
     visibility: hidden;
 }
+
+.img-wh div{
+  // width: 350px !important;
+  height:  250px !important;
+}
+
+.ngxImageZoomThumbnail{
+  height: 350px !important;
+    width: 250px !important;
+    object-fit: cover !important;
+    object-position: center !important;
+}
