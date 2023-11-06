@@ -1,1 +1,52 @@
-<p>sidebar works!</p>
+<div id="sidebar">
+    <div class="sidebar-header">
+        <img src="assets/images/logo1.png" class="img-fluid">
+        <!-- <button mat-icon-button class="btn-icon btn-sidebar-close" (click)="onCloseSidebar()">
+            <span class="material-symbols-rounded">
+                close
+            </span>
+        </button> -->
+    </div>
+    <div class="sidebar-body scrollbar">
+        <ul class="menu">
+            <li>
+                <a routerLink="./dashboard" routerLinkActive="active">
+                    <div class="menu-item">
+                        <img src="assets/images/sidebar-icons/dashboard.svg">
+                        Dashboard
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a data-bs-toggle="collapse" href="#collapseMaster" role="button" aria-expanded="false"
+                    aria-controls="collapseMaster">
+                    <div class="menu-item">
+                        <img src="assets/images/sidebar-icons/master.svg">
+                        Masters
+                    </div>
+                    <span class="dropdown-toggle"></span>
+                </a>
+                <div class="collapse" id="collapseMaster">
+                    <div class="submenu">
+                        <div class="list-group list-group-flush">
+                            <a routerLink="./ai-toll-vehicle-update" routerLinkActive="active"
+                                class="list-group-item list-group-item-action active" aria-current="true">
+                                <mat-icon class="material-symbols-rounded">
+                                    east
+                                </mat-icon>
+                                AI Toll Vehicle Update
+                            </a>
+                            <a routerLink="./ai-toll-verification" routerLinkActive="active"
+                                class="list-group-item list-group-item-action">
+                                <mat-icon class="material-symbols-rounded">
+                                    east
+                                </mat-icon>
+                                AI Toll Verification
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
