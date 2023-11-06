@@ -1,4 +1,436 @@
-/* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+@include mat.core();
+
+@include mat.all-component-densities(-3);
+@include mat.form-field-density(-5);
+@import url('assets/scss/MaterialStyleSheet.scss');
+
+body {
+    font-family: 'Rubik', sans-serif !important;
+    background-color: #eee;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+span,
+small,
+.small {
+    font-family: 'Rubik', sans-serif !important;
+    letter-spacing: normal;
+}
+
+:root {
+    --sidebar-bg-color: #3b374b; //#2065ae
+    --sidebar-bg-dark-color: #2f2c3c;
+    --main-color: #7267EF; //#2065ae
+    --main-dark-color: #5b52bf;
+    --main-light-color: #e2e0fb;
+}
+
+.bg-main {
+    background-color: var(--main-color) !important;
+    color: #fff;
+}
+
+.bg-main-light {
+    background-color: var(--main-light-color) !important;
+}
+
+.bg-main-dark {
+    background-color: var(--main-dark-color) !important;
+    color: #fff;
+}
+
+.fs-main {
+    font-family: 'Rubik', sans-serif !important;
+    font-size: 0.85rem !important;
+}
+
+.text-main,
+a.text-main {
+    color: var(--main-color) !important;
+    text-decoration: none;
+    font-size: 0.85rem;
+    letter-spacing: normal;
+}
+
+a.text-main {
+    cursor: pointer;
+}
+
+a.text-main:hover {
+    color: var(--main-dark-color);
+    text-decoration: underline;
+}
+
+.text-main-dark {
+    color: var(--main-dark-color);
+}
+
+.text-main-light {
+    color: var(--main-light-color);
+}
+
+.btn-main,
+.btn-main-light,
+.btn-main-dark {
+    font-family: 'Rubik', sans-serif !important;
+    letter-spacing: 0px !important;
+}
+
+.btn-main {
+    background-color: var(--main-color) !important;
+    color: #fff !important;
+    height: 36px !important;
+}
+
+.btn-main:hover {
+    background-color: var(--main-dark-color) !important;
+    color: #fff;
+}
+
+.btn-main-light {
+    background-color: var(--main-light-color) !important;
+    color: var(--main-color) !important;
+    height: 36px !important;
+}
+
+.btn-main-light:hover {
+    background-color: var(--main-color) !important;
+    color: #fff !important;
+}
+
+.btn-main-dark:hover,
+.btn-main-dark {
+    background-color: var(--main-dark-color);
+    color: #fff;
+    height: 36px !important;
+}
+
+.btn-icon {
+    width: 36px !important;
+    min-width: 36px !important;
+    line-height: 0 !important;
+    height: 36px !important;
+}
+
+.btn-icon:hover {
+    width: 36px !important;
+    min-width: 36px !important;
+}
+
+.btn-icon .material-symbols-rounded {
+    font-size: 18px !important;
+    line-height: 1 !important;
+    overflow: unset;
+    margin: 0 !important;
+}
+
+.btn-back {
+    background-color: var(--main-light-color);
+    color: var(--main-color);
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    padding-block: 2px !important;
+    column-gap: 5px;
+}
+
+.btn-back .material-symbols-rounded {
+    font-size: 1.1rem;
+    height: 16px;
+}
+
+.btn-back:hover {
+    background-color: var(--main-color);
+    color: #fff;
+}
+
+.page-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    margin-bottom: 10px;
+}
+
+.page-heading .page-name {
+    font-weight: 500;
+}
+
+.page-heading .mat-mdc-form-field-subscript-wrapper {
+    display: none;
+}
+
+ol.breadcrumb {
+    font-size: 0.8rem;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.plain-card {
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.plain-card .card-header,
+.plain-card .card-footer {
+    padding: 10px 15px;
+    font-weight: 500;
+}
+
+.plain-card .card-header-control .mat-mdc-form-field-subscript-wrapper {
+    display: none;
+}
+
+.plain-card .card-body {
+    padding: 15px;
+}
+
+.dashboard-table {
+    @include mat.all-component-densities(-3);
+    font-family: 'Rubik', sans-serif !important;
+    box-shadow: none;
+}
+
+.dashboard-table thead th {
+    background-color: #eee !important;
+    font-weight: 500;
+}
+
+.dashboard-table th,
+.dashboard-table td {
+    font-family: 'Rubik', sans-serif !important;
+    font-size: 0.85rem;
+    vertical-align: middle;
+}
+
+.dashboard-table td button {
+    @include mat.all-component-densities(-3);
+}
+
+.dashboard-table td button .material-symbols-rounded {
+    font-size: 1.3rem;
+    height: 18px;
+}
+
+.dashboard-table .profile-photo {
+    width: 36px;
+}
+
+.class,
+.dashboard-table .class {
+    padding: 5px 10px;
+    background-color: #eee;
+    font-weight: 500;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.modal-footer {
+    font-family: 'Rubik', sans-serif !important;
+    font-size: 0.85rem;
+    padding: 5px 15px !important;
+}
+
+.modal-header {
+    font-family: 'Rubik', sans-serif !important;
+    font-size: 0.85rem;
+    background-color: var(--main-light-color);
+    padding: 5px 15px !important;
+}
+
+.mdc-dialog__title::before {
+    height: 0 !important;
+    display: none !important;
+}
+
+.modal-body {
+    padding: 10px 15px !important;
+}
+
+button.btn-modal-close {
+    @include mat.all-component-densities(-3);
+    padding: 0 !important;
+}
+
+.btn-modal-close .material-symbols-rounded {
+    font-size: 1.3rem !important;
+    height: 18px !important;
+    width: 19px !important;
+}
+
+.file-upload {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.file-upload .btn {
+    background-color: var(--main-light-color) !important;
+    letter-spacing: normal;
+    font-family: 'Rubik', sans-serif !important;
+    font-size: 0.8rem;
+    height: 28px !important;
+    color: var(--main-color) !important;
+    font-weight: 500;
+}
+
+.file-upload .btn-action {
+    height: 28px !important;
+    width: 28px !important;
+    padding: 0;
+    min-width: 28px !important;
+}
+
+.file-upload input[type=file] {
+    font-size: 100px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+}
+
+.section-head {
+    font-family: 'Rubik', sans-serif !important;
+    background-color: var(--main-light-color);
+    color: #000;
+    font-weight: 600;
+    font-size: 0.85rem;
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    margin-bottom: 15px;
+    letter-spacing: normal;
+}
+
+.form-container .form-label {
+    font-family: 'Rubik', sans-serif !important;
+    font-size: 0.85rem;
+    margin-bottom: 3px;
+    letter-spacing: normal;
+    font-weight: 500;
+    color: #656565;
+}
+
+.form-container .form-data {
+    font-family: 'Rubik', sans-serif !important;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: normal;
+}
+
+.no-subscript-wrapper .mat-mdc-form-field-subscript-wrapper {
+    display: none !important;
+}
+
+.snack-success .mdc-snackbar__surface {
+    background-color: #198754 !important;
+    color: #fff !important;
+}
+
+.snack-danger .mdc-snackbar__surface {
+    background-color: #DC3545 !important;
+    color: #fff !important;
+}
+
+.snack-warning .mdc-snackbar__surface {
+    background-color: #FFC107 !important;
+}
+
+.snack-warning .mat-mdc-snack-bar-container,
+.snack-warning .mdc-snackbar__label {
+    color: #000 !important;
+}
+
+.gallery {
+    position: relative;
+}
+
+.gallery img {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+}
+
+.gallery .gallery-buttons {
+    position: absolute;
+    top: -15px;
+    right: -15px;
+}
+
+.gallery .gallery-buttons button {
+    width: 32px;
+    height: 32px;
+}
+
+.gallery .gallery-buttons .material-symbols-rounded {
+    font-size: 1.2rem;
+    width: 21px;
+}
+
+.margin-control {
+    margin-bottom: 21px;
+}
+
+
+
+
+
+
+
+
+
+.scrollbar {
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+    overscroll-behavior: auto;
+    scrollbar-color: var(--main-color) transparent;
+    // scrollbar-gutter: stable;
+    scrollbar-width: thin;
+}
+
+.scrollbar:hover::-webkit-scrollbar,
+.scrollbar:hover::-webkit-scrollbar-thumb,
+.scrollbar:hover:focus::-webkit-scrollbar,
+.scrollbar:hover:focus::-webkit-scrollbar-thumb {
+    visibility: visible;
+}
+
+.scrollbar::-webkit-scrollbar {
+    -webkit-appearance: none;
+    background-color: transparent;
+    height: 0.375rem;
+    visibility: hidden;
+    width: 0.375rem;
+}
+
+.scrollbar::-webkit-scrollbar-button,
+.scrollbar::-webkit-scrollbar-corner {
+    display: none;
+}
+
+.scrollbar::-webkit-scrollbar-button,
+.scrollbar::-webkit-scrollbar-corner {
+    display: none;
+}
+
+.scrollbar:hover::-webkit-scrollbar,
+.scrollbar:hover::-webkit-scrollbar-thumb,
+.scrollbar:hover:focus::-webkit-scrollbar,
+.scrollbar:hover:focus::-webkit-scrollbar-thumb {
+    visibility: visible;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+    background-color: var(--main-color);
+    border-radius: 3px;
+    visibility: hidden;
+}
