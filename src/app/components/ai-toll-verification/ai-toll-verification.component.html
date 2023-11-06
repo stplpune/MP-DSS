@@ -1,4 +1,3 @@
-
 <div class="row mb-3">
   <div class="col-sm-4 ">
     <div class="card  toll-plaza-card border-0">
@@ -74,8 +73,7 @@
           <mat-form-field appearance="outline" class="w-100">
             <mat-label>All District</mat-label>
             <mat-select formControlName="dist">
-              <mat-option *ngFor="let distObj of districtArray"
-                [value]="distObj.id">{{distObj.district}}</mat-option>
+              <mat-option *ngFor="let distObj of districtArray" [value]="distObj.id">{{distObj.district}}</mat-option>
 
             </mat-select>
           </mat-form-field>
@@ -120,7 +118,8 @@
         <div class="col-sm-3">
           <mat-form-field appearance="outline" class="w-100">
             <mat-label>Vehicle No.</mat-label>
-            <input matInput formControlName="TextSearch" placeholder="Vehicle No." UpperCaseText (keypress)="Validation.noSpaceAllow($event);Validation.alphaNumericWithSpaces($event)">
+            <input matInput formControlName="TextSearch" placeholder="Vehicle No." UpperCaseText
+              (keypress)="Validation.noSpaceAllow($event);Validation.alphaNumericWithSpaces($event)">
           </mat-form-field>
         </div>
         <div class="col-sm-auto">
@@ -131,7 +130,7 @@
   </mat-card-header>
   <mat-card-content class="card-body">
     <mat-tab-group (selectedTabChange)="tabClick($event);">
-      <mat-tab label="IN PROGRESS" >
+      <mat-tab label="IN PROGRESS">
         <div class="table-responsive table-content scrollbar">
           <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="dashboard-table">
             <ng-container matColumnDef="SrNo">
@@ -168,8 +167,10 @@
               <td mat-cell *matCellDef="let element">
                 <button mat-icon-button aria-label="expand row"
                   (click)="(expandedElement = expandedElement === element ? null : element); $event.stopPropagation() ;onClickFold(element,'Progress')">
-                  <mat-icon class="material-symbols-rounded" *ngIf="expandedElement !== element">keyboard_arrow_down</mat-icon>
-                  <mat-icon class="material-symbols-rounded" *ngIf="expandedElement === element">keyboard_arrow_up</mat-icon>
+                  <mat-icon class="material-symbols-rounded"
+                    *ngIf="expandedElement !== element">keyboard_arrow_down</mat-icon>
+                  <mat-icon class="material-symbols-rounded"
+                    *ngIf="expandedElement === element">keyboard_arrow_up</mat-icon>
                 </button>
               </td>
             </ng-container>
@@ -187,13 +188,14 @@
                           <div class="camera">
                             <!-- <img src="{{imageType(element, 'Anpr', 'Predication')?.imagePath}}" alt=""
                               class="camera-height"> -->
-                              <div class="img-wh">
-                                <div>
-                                  <lib-ngx-image-zoom [thumbImage]="imageType(element, 'Anpr', 'Predication')?.imagePath"  [magnification]="1" [enableScrollZoom]="true"
-                                    [enableLens]="true" [lensWidth]="250" [lensHeight]="250">
-                                  </lib-ngx-image-zoom>
-                                </div>
+                            <div class="img-wh">
+                              <div>
+                                <lib-ngx-image-zoom [thumbImage]="imageType(element, 'Anpr', 'Predication')?.imagePath"
+                                  [magnification]="1" [enableScrollZoom]="true" [enableLens]="true" [lensWidth]="250"
+                                  [lensHeight]="250">
+                                </lib-ngx-image-zoom>
                               </div>
+                            </div>
                             <span>ANPR Camera</span>
 
                           </div>
@@ -220,13 +222,14 @@
                       <div class="row gy-2 mb-4">
                         <div class="col-sm-4">
                           <div class="camera">
-                              <div class="img-wh">
-                                <div>
-                                  <lib-ngx-image-zoom [thumbImage]="imageType(element, 'Anpr', 'Raw')?.imagePath"  [magnification]="1" [enableScrollZoom]="true"
-                                    [enableLens]="true" [lensWidth]="250" [lensHeight]="250">
-                                  </lib-ngx-image-zoom>
-                                </div>
+                            <div class="img-wh">
+                              <div>
+                                <lib-ngx-image-zoom [thumbImage]="imageType(element, 'Anpr', 'Raw')?.imagePath"
+                                  [magnification]="1" [enableScrollZoom]="true" [enableLens]="true" [lensWidth]="250"
+                                  [lensHeight]="250">
+                                </lib-ngx-image-zoom>
                               </div>
+                            </div>
                             <span>ANPR Camera</span>
                           </div>
                         </div>
@@ -282,8 +285,10 @@
                           <div class="mb-2">
                             <label for="">Vehicle No.</label>
                             <mat-form-field appearance="outline" class="w-100">
-                              <input matInput placeholder="Vehicle No."
-                                formControlName="vehicleNumberInput"UpperCaseText (keypress)="Validation.noSpaceAllow($event);Validation.alphaNumericWithSpaces($event);checkRawNo(element)"  maxlength="10">
+                              <input matInput placeholder="Vehicle No." formControlName="vehicleNumberInput"
+                                UpperCaseText
+                                (keypress)="Validation.noSpaceAllow($event);Validation.alphaNumericWithSpaces($event);checkRawNo(element)"
+                                maxlength="10">
                             </mat-form-field>
                           </div>
                           <div class="mb-0">
@@ -295,8 +300,8 @@
                               </mat-select>
                             </mat-form-field>
                             <mat-form-field appearance="outline" class="w-100">
-                              <textarea matInput name="questionText" cols="35" rows="3" placeholder="Remark " alphaNumericWithSpecialchar
-                                formControlName="vehicleNumberRemark"></textarea>
+                              <textarea matInput name="questionText" cols="35" rows="3" placeholder="Remark "
+                                alphaNumericWithSpecialchar formControlName="vehicleNumberRemark"></textarea>
                             </mat-form-field>
                           </div>
                         </div>
@@ -323,10 +328,9 @@
                           <div class="mb-2">
                             <label for="">Vehicle Type</label>
                             <mat-form-field appearance="outline" class="w-100">
-                              <mat-select formControlName="vehicleFrontAnalysisType"
-                                placeholder="Select Vehicle Type" (selectionChange)="checkRawFrontClass(element)">
-                                <mat-option *ngFor="let item of front_cls_names"
-                                  [value]="item">{{item}}</mat-option>
+                              <mat-select formControlName="vehicleFrontAnalysisType" placeholder="Select Vehicle Type"
+                                (selectionChange)="checkRawFrontClass(element)">
+                                <mat-option *ngFor="let item of front_cls_names" [value]="item">{{item}}</mat-option>
                               </mat-select>
                             </mat-form-field>
                           </div>
@@ -367,8 +371,8 @@
                           <div class="mb-2">
                             <label for="">Mining Type</label>
                             <mat-form-field appearance="outline" class="w-100">
-                              <mat-select formControlName="TopAnalysissubCategoryType"
-                                placeholder="Select Mining Type" (selectionChange)="checkRawTopClass(element)">
+                              <mat-select formControlName="TopAnalysissubCategoryType" placeholder="Select Mining Type"
+                                (selectionChange)="checkRawTopClass(element)">
                                 <mat-option *ngFor="let x of topCategoryArray"
                                   [value]="x.id">{{x.subCategory}}</mat-option>
                               </mat-select>
@@ -383,8 +387,8 @@
                               </mat-select>
                             </mat-form-field>
                             <mat-form-field appearance="outline" class="w-100">
-                              <textarea matInput name="questionText" cols="35" rows="3" placeholder="Remark " alphaNumericWithSpecialchar
-                                formControlName="TopAnalysisRemark"></textarea>
+                              <textarea matInput name="questionText" cols="35" rows="3" placeholder="Remark "
+                                alphaNumericWithSpecialchar formControlName="TopAnalysisRemark"></textarea>
                             </mat-form-field>
                           </div>
                         </div>
@@ -428,7 +432,7 @@
       </mat-tab>
       <mat-tab label="COMPLETED">
         <div class="table-responsive table-content scrollbar">
-          <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8">
+          <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="dashboard-table">
             <ng-container matColumnDef="SrNo">
               <th mat-header-cell *matHeaderCellDef> Sr.No. </th>
               <td mat-cell *matCellDef="let element; let i=index" class="mxw-80"> {{element.srNo}}</td>
@@ -436,13 +440,16 @@
             <ng-container matColumnDef="VehicleNo">
               <th mat-header-cell *matHeaderCellDef>Vehicle No.</th>
               <td mat-cell *matCellDef="let element ">
-                <div class="text-uppercase" style="min-width: 125px;">
-                  <p class="mb-0 fw-600"><span class="font-weight-bold">AI - </span>{{element.vehicle_OriginalNo ? element.vehicle_OriginalNo  : element.vehicleno }}</p>
-                  <p class="mb-0 fw-600"><span class="font-weight-bold">GT - </span>{{element.vehicleno}}</p><span
-                    class="small"> {{element.date | date:"dd/MM/yyyy HH:mm"}}</span>
+                <div class="d-flex">
+                  <div class="text-uppercase" style="min-width: 125px;">
+                    <p class="mb-0 fw-600"><span class="fw-bold">AI - </span>{{element.vehicle_OriginalNo ?
+                      element.vehicle_OriginalNo : element.vehicleno }}</p>
+                    <p class="mb-0 fw-600"><span class="fw-bold">GT - </span>{{element.vehicleno}}</p><span
+                      class="small"> {{element.date | date:"dd/MM/yyyy HH:mm"}}</span>
+                  </div>
+                  <img src="{{imageType(element, 'Number Plate', 'Nothing')?.imagePath}}" height="60"
+                    class="m-2  NumberPLate" style="border: 2px solid #5a5a5a;">
                 </div>
-                <img src="{{imageType(element, 'Number Plate', 'Nothing')?.imagePath}}" height="60"
-                  class="m-2  NumberPLate" style="border: 2px solid #5a5a5a;">
               </td>
             </ng-container>
             <ng-container matColumnDef="LegalIllegal">
@@ -478,8 +485,10 @@
               <td mat-cell *matCellDef="let element">
                 <button mat-icon-button aria-label="expand row"
                   (click)="(expandedElement = expandedElement === element ? null : element); $event.stopPropagation() ;onClickFold(element,'completed')">
-                  <mat-icon *ngIf="expandedElement !== element">keyboard_arrow_down</mat-icon>
-                  <mat-icon *ngIf="expandedElement === element">keyboard_arrow_up</mat-icon>
+                  <mat-icon class="material-symbols-rounded"
+                    *ngIf="expandedElement !== element">keyboard_arrow_down</mat-icon>
+                  <mat-icon class="material-symbols-rounded"
+                    *ngIf="expandedElement === element">keyboard_arrow_up</mat-icon>
                 </button>
               </td>
             </ng-container>
@@ -495,13 +504,14 @@
                       <div class="row gy-2 mb-4">
                         <div class="col-sm-4">
                           <div class="camera">
-                              <div class="img-wh">
-                                <div>
-                                  <lib-ngx-image-zoom [thumbImage]="imageType(element, 'Anpr', 'Predication')?.imagePath"  [magnification]="1" [enableScrollZoom]="true"
-                                    [enableLens]="true" [lensWidth]="250" [lensHeight]="250">
-                                  </lib-ngx-image-zoom>
-                                </div>
+                            <div class="img-wh">
+                              <div>
+                                <lib-ngx-image-zoom [thumbImage]="imageType(element, 'Anpr', 'Predication')?.imagePath"
+                                  [magnification]="1" [enableScrollZoom]="true" [enableLens]="true" [lensWidth]="250"
+                                  [lensHeight]="250">
+                                </lib-ngx-image-zoom>
                               </div>
+                            </div>
                             <span>ANPR Camera</span>
                           </div>
                         </div>
@@ -527,13 +537,14 @@
                       <div class="row gy-2 mb-4">
                         <div class="col-sm-4">
                           <div class="camera">
-                              <div class="img-wh">
-                                <div>
-                                  <lib-ngx-image-zoom [thumbImage]="imageType(element, 'Anpr', 'Raw')?.imagePath"  [magnification]="1" [enableScrollZoom]="true"
-                                    [enableLens]="true" [lensWidth]="250" [lensHeight]="250">
-                                  </lib-ngx-image-zoom>
-                                </div>
+                            <div class="img-wh">
+                              <div>
+                                <lib-ngx-image-zoom [thumbImage]="imageType(element, 'Anpr', 'Raw')?.imagePath"
+                                  [magnification]="1" [enableScrollZoom]="true" [enableLens]="true" [lensWidth]="250"
+                                  [lensHeight]="250">
+                                </lib-ngx-image-zoom>
                               </div>
+                            </div>
                             <span>ANPR Camera</span>
                           </div>
                         </div>
@@ -594,15 +605,17 @@
                           <div class="mb-2">
                             <label for="">Vehicle No.</label>
                             <mat-form-field appearance="outline" class="w-100">
-                              <input matInput placeholder="Vehicle No."
-                                formControlName="vehicleNumberInput" UpperCaseText (keypress)="Validation.noSpaceAllow($event);Validation.alphaNumericWithSpaces($event);checkRawNo(element)" maxlength="10">
+                              <input matInput placeholder="Vehicle No." formControlName="vehicleNumberInput"
+                                UpperCaseText
+                                (keypress)="Validation.noSpaceAllow($event);Validation.alphaNumericWithSpaces($event);checkRawNo(element)"
+                                maxlength="10">
                             </mat-form-field>
                           </div>
                           <div class="mb-0">
                             <label>Remark</label>
                             <mat-form-field appearance="outline" class="w-100">
-                              <textarea matInput name="questionText" cols="35" rows="3" placeholder="Remark " alphaNumericWithSpecialchar
-                                formControlName="vehicleNumberRemark"></textarea>
+                              <textarea matInput name="questionText" cols="35" rows="3" placeholder="Remark "
+                                alphaNumericWithSpecialchar formControlName="vehicleNumberRemark"></textarea>
                             </mat-form-field>
                           </div>
                         </div>
@@ -629,18 +642,17 @@
                           <div class="mb-2">
                             <label for="">Vehicle Type</label>
                             <mat-form-field appearance="outline" class="w-100">
-                              <mat-select formControlName="vehicleFrontAnalysisType"
-                                placeholder="Select Vehicle Type" (selectionChange)="checkRawFrontClass(element)">
-                                <mat-option *ngFor="let item of front_cls_names"
-                                  [value]="item">{{item}}</mat-option>
+                              <mat-select formControlName="vehicleFrontAnalysisType" placeholder="Select Vehicle Type"
+                                (selectionChange)="checkRawFrontClass(element)">
+                                <mat-option *ngFor="let item of front_cls_names" [value]="item">{{item}}</mat-option>
                               </mat-select>
                             </mat-form-field>
                           </div>
                           <div class="mb-0">
                             <label>Remark</label>
                             <mat-form-field appearance="outline" class="w-100">
-                              <textarea matInput name="questionText" cols="35" rows="3" placeholder="Remark " alphaNumericWithSpecialchar
-                                formControlName="vehicleFrontAnalysisRemark"></textarea>
+                              <textarea matInput name="questionText" cols="35" rows="3" placeholder="Remark "
+                                alphaNumericWithSpecialchar formControlName="vehicleFrontAnalysisRemark"></textarea>
                             </mat-form-field>
                           </div>
                         </div>
@@ -667,8 +679,8 @@
                           <div class="mb-2">
                             <label for="">Mining Type</label>
                             <mat-form-field appearance="outline" class="w-100">
-                              <mat-select formControlName="TopAnalysissubCategoryType"
-                                placeholder="Select Mining Type" (selectionChange)="checkRawTopClass(element)">
+                              <mat-select formControlName="TopAnalysissubCategoryType" placeholder="Select Mining Type"
+                                (selectionChange)="checkRawTopClass(element)">
                                 <mat-option *ngFor="let x of topCategoryArray"
                                   [value]="x.id">{{x.subCategory}}</mat-option>
                               </mat-select>
@@ -677,8 +689,9 @@
                           <div class="mb-0">
                             <label>Remark</label>
                             <mat-form-field appearance="outline" class="w-100">
-                              <textarea matInput name="questionText" cols="35" rows="3" placeholder="Remark " alphaNumericWithSpecialchar
-                                (keypress)="Validation.removeSpaceAtBegining($event)"  formControlName="TopAnalysisRemark"></textarea>
+                              <textarea matInput name="questionText" cols="35" rows="3" placeholder="Remark "
+                                alphaNumericWithSpecialchar (keypress)="Validation.removeSpaceAtBegining($event)"
+                                formControlName="TopAnalysisRemark"></textarea>
                             </mat-form-field>
                           </div>
                         </div>
@@ -694,9 +707,9 @@
                       <div class="col-sm-2 text-end">
                         <button mat-flat-button class="btn-main" (click)="saveUpdate()">Update</button>
                         <button mat-flat-button class="btn-icon mnw-auto ms-2" (click)="openImage(element)">
-                          <span class="material-symbols-rounded">
+                          <mat-icon class="material-symbols-rounded">
                             visibility
-                          </span>
+                          </mat-icon>
                         </button>
                       </div>
                     </div>
