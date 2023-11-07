@@ -34,7 +34,7 @@
                             My Profile
                         </a>
                     </li>
-                    <li><a class="dropdown-item">
+                    <li><a class="dropdown-item" (click)="openChangePasswordDialog()">
                             <mat-icon class="material-symbols-rounded">
                                 lock
                             </mat-icon>
@@ -43,7 +43,7 @@
                     <li>
                         <hr class="dropdown-divider">
                     </li>
-                    <li><a class="dropdown-item">
+                    <li><a class="dropdown-item" (click)="logOut()">
                             <mat-icon class="material-symbols-rounded">
                                 logout
                             </mat-icon>

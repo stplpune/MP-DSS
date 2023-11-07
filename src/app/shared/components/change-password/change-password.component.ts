@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { FormBuilder, FormGroup, NgForm, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -11,13 +11,17 @@ import { WebStorageService } from 'src/app/core/services/web-storage.service';
 import { ErrorsService } from 'src/app/core/services/errors.service';
 import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
 import { MatButtonModule } from '@angular/material/button';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @Component({
   selector: 'app-change-password',
   standalone: true,
-  imports: [CommonModule,MatIconModule,ReactiveFormsModule,MatFormFieldModule,MatInputModule,MatButtonModule],
+  imports: [CommonModule,MatIconModule,ReactiveFormsModule,MatFormFieldModule,MatInputModule,MatButtonModule,MatSnackBarModule,HttpClientModule],
   templateUrl: './change-password.component.html',
+  providers: [CommonMethodsService,ApiService,ErrorsService, WebStorageService,DatePipe, { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }],
   styleUrls: ['./change-password.component.scss']
 })
 export class ChangePasswordComponent {

@@ -1,8 +1,11 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-global-dialog',
+  standalone : true,
+  imports :[MatIconModule],
   templateUrl: './global-dialog.component.html',
   styleUrls: ['./global-dialog.component.scss']
 })
