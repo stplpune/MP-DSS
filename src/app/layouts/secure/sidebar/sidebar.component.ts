@@ -31,8 +31,8 @@ export class SidebarComponent {
         "menuIcon": "assets/images/sidebar-icons/Dashboard.svg",
         "isSideBarMenu": 1,
         "sortOrder": 1
-    },
-    {
+      },
+      {
         "id": 2,
         "designationId": 1,
         "mainMenuId": 2,
@@ -47,8 +47,8 @@ export class SidebarComponent {
         "menuIcon": 'assets/images/sidebar-icons/circle.svg',
         "isSideBarMenu": 1,
         "sortOrder": 2
-    },
-    {
+      },
+      {
         "id": 3,
         "designationId": 1,
         "mainMenuId": 2,
@@ -63,22 +63,22 @@ export class SidebarComponent {
         "menuIcon": 'assets/images/sidebar-icons/circle.svg',
         "isSideBarMenu": 1,
         "sortOrder": 3
-    },{
-      "id": 14,
-      "designationId": 1,
-      "mainMenuId": 5,
-      "mainMenu": "Setting",
-      "subMenuId": 7,
-      "subMenu": "Setting",
-      "pageName": "Page right access",
-      "readRight": true,
-      "writeRight": true,
-      "deleteRight": true,
-      "pageURL": "page-right-access",
-      "menuIcon": 'assets/images/sidebar-icons/Settings.svg',
-      "isSideBarMenu": 1,
-      "sortOrder": 14
-  },
+      }, {
+        "id": 14,
+        "designationId": 1,
+        "mainMenuId": 5,
+        "mainMenu": "Setting",
+        "subMenuId": 7,
+        "subMenu": "Setting",
+        "pageName": "Page right access",
+        "readRight": true,
+        "writeRight": true,
+        "deleteRight": true,
+        "pageURL": "page-right-access",
+        "menuIcon": 'assets/images/sidebar-icons/Settings.svg',
+        "isSideBarMenu": 1,
+        "sortOrder": 14
+      },
     ]
 
     let pageUrls = pageListData.filter((ele: any) => {
