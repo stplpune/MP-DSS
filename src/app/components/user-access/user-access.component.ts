@@ -14,6 +14,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-user-access',
@@ -27,7 +28,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     ReactiveFormsModule,
     MatSelectModule,
     MatInputModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatButtonModule
   ],
   providers: [CommonMethodsService,ApiService,ErrorsService,DatePipe, { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }],
   templateUrl: './user-access.component.html',
