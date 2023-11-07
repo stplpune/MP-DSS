@@ -305,7 +305,7 @@ export class AiTollVehicleUpdateComponent {
       "vehicleTypeId": 0,//+this.topCategoryArray.find((res: any) => res.id == formData.TopAnalysissubCategoryType).id,
       "aI_VehicleType": formData.vehicleFrontAnalysisType.toString(),
       "vehicleDetected": formData.VehicleDetected,
-      "isVerified": flag,
+      "IsReVerified": flag,
       "isCompleted": 1,
       "aI_Toll_VerificationRemark": formData.aI_Toll_VerificationRemark || 'test'
     }
