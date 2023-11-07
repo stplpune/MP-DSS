@@ -1,6 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA, Component } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import ImageViewer from 'awesome-image-viewer';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -24,6 +24,7 @@ import { ErrorsService } from 'src/app/core/services/errors.service';
 import { ValidationService } from 'src/app/core/services/validation.service';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { ExcelPfdDownloadedService } from 'src/app/core/services/excel-pfd-download.service';
 
 @Component({
   selector: 'app-ai-toll-verification',
@@ -43,7 +44,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
     MatPaginatorModule ,NgxImageZoomModule,DirectivesModule,MatSnackBarModule
   ],
   templateUrl: './ai-toll-verification.component.html',
-  providers: [CommonMethodsService,ApiService,ErrorsService,DatePipe, { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }],
+  providers: [ExcelPfdDownloadedService,CommonMethodsService,ApiService,ErrorsService,DatePipe, { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }],
   styleUrls: ['./ai-toll-verification.component.scss'],
   animations: [
     trigger('detailExpand', [
@@ -59,24 +60,24 @@ export class AiTollVerificationComponent {
   dataSource: any;
   displayedColumns = ['SrNo', 'VehicleNo', 'LegalIllegal', 'FrontClassName', 'TopClassName', 'LaneNo', 'expand'];
   expandedElement: any | null;
+  pageNumber = 1;
+  totalRows: any;
 
   maxDate = new Date()
   districtArray = new Array();
   topCategoryArray = new Array();
+  lineArray = new Array(8);
+
+  iscompleted: Number = 0;
   ANPRRemarkArray: any = ["number mismatch (standard)", " number mismatch (not standard)", "number plate not visible", "software error", "ANPR image not found", "vehicle mismatch ", "other"]
   frontTopRemarkArray: any = ['software error', 'Vehicle mismatch', 'other'];
   front_cls_names = ['truck', 'mini_truck', 'container', 'hywa', 'tractor', 'car', 'bus', 'unclassified', 'other', 'not_found', 'image_not_found'];
-  iscompleted: Number = 0;
 
-  filterFrom: any;
-  updateFrom: any;
-  lineArray = new Array(8);
-  pageNumber = 1;
-  totalRows: any;
-  editObj: any;
-
+  filterFrom!: FormGroup;
+  updateFrom:any;
 
   totalVerifiedCountDetails: any;
+  editObj: any;
 
   constructor(private apiService: ApiService,
     public commonService: CommonMethodsService,
@@ -85,7 +86,8 @@ export class AiTollVerificationComponent {
     private spinner: NgxSpinnerService,
     private errorService: ErrorsService,
     public Validation:ValidationService,
-    private dateAdapter: DateAdapter<Date>
+    private dateAdapter: DateAdapter<Date>,
+    private excelPdfDownload:ExcelPfdDownloadedService
   ) {
     this.dateAdapter.setLocale('en-GB');
   }
@@ -144,7 +146,7 @@ export class AiTollVerificationComponent {
           this.districtArray.unshift({ id: 0, district: "All District" });
         } else {
           this.districtArray = [];
-          this.commonService.snackBar(res.statusCode, 1);
+          this.errorService.handelError(res.statusCode);
         }
       },
       error: (e: any) => {
@@ -156,7 +158,7 @@ export class AiTollVerificationComponent {
 
   // ----
   bindTopCategory() {
-    this.apiService.setHttp('GET', 'action-taken/get-ai-model-subcategory', false, false, false, 'mineralMappingUrl');
+    this.apiService.setHttp('GET', 'MP/monitoring/get-ai-model-subcategory', false, false, false, 'mpDssBaseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == "200") {
@@ -165,7 +167,7 @@ export class AiTollVerificationComponent {
 
         } else {
           this.topCategoryArray = [];
-          this.commonService.snackBar('No data found', 1);
+          this.errorService.handelError(res.statusCode);
         }
       },
       error: (e: any) => {
@@ -187,7 +189,7 @@ export class AiTollVerificationComponent {
     queryParam += '&AI_SubCategory=' + topClass  + '&FrontClassName=' + fromData.FrontClassName + '&Status=' + fromData.Status + '&TextSearch=' + fromData.TextSearch
     if (fromData.dist) { queryParam += '&dist=' + fromData.dist }
     if (fromData.Laneid) { queryParam += '&Laneid=' + fromData.Laneid }
-    this.apiService.setHttp('GET', 'action-taken/GetAIModelVerification_TollPlaza' + queryParam, false, false, false, 'mineralMappingUrl');
+    this.apiService.setHttp('GET', 'MP/monitoring/GetAIModelVerificationTollPlaza' + queryParam, false, false, false, 'mpDssBaseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == "200") {
@@ -195,11 +197,11 @@ export class AiTollVerificationComponent {
           var details = res.responseData.responseData1;
           details.map((ele: any, ind: number) => ele.srNo = (ind + 1 + (this.pageNumber - 1) * 10))
           this.dataSource = new MatTableDataSource(details);
-          this.totalRows = res.responseData.responseData2[0].totalPages;
+        //  this.totalRows = res.responseData.responseData2[0].totalPages;
         } else {
           this.spinner.hide();
           this.dataSource = [];
-          res.statusCode == 404 ? '' : this.commonService.snackBar('No data found', 1);
+          res.statusCode == 404 ? '' : this.errorService.handelError(res.statusCode);
           this.totalRows = 0;
         }
       },
@@ -226,7 +228,7 @@ export class AiTollVerificationComponent {
           this.totalVerifiedCountDetails = res.responseData;
         } else {
           this.totalVerifiedCountDetails = '';
-          res.statusCode == 404 ? '' : this.commonService.snackBar('No data found', 1);
+          res.statusCode == 404 ? '' : this.errorService.handelError(res.statusCode);
         }
       },
       error: (e: any) => {
@@ -248,7 +250,7 @@ export class AiTollVerificationComponent {
       VehicleDetected: data.vehicleDetected == 'No' ? data.vehicleDetected : 'Yes',
       vehicleNumberPlate: data.numberPlateDetected || 'Yes',
       vehicleNumberDetected: data.vehicleNo_Available == 'No' ? data.vehicleNo_Available : 'Yes',
-      vehicleNumberInput: data.vehicleno || '',
+      vehicleNumberInput: data.vehicleNumber || '',
       vehicleNumberRemark: data.numberPlateRemark || '',
       frontViewVehicle: data.frontVehicleDetected || 'Yes',
       vehicleFrontAnalysis: data.frontAnalysis == 'No' ? data.frontAnalysis : 'Yes',
@@ -256,10 +258,9 @@ export class AiTollVerificationComponent {
       vehicleFrontAnalysisRemark: data.frontVehicleRemark || '',
       TopVehicleDetected: data.topVehicleDetected || 'Yes',
       TopAnalysis: data.topAnalysis == 'No' ? data.topAnalysis : 'Yes',
-      TopAnalysissubCategoryType: data?.aiSubCategoryId,
+      TopAnalysissubCategoryType: data?.aI_SubCategory,
       TopAnalysisRemark: data.topVehicleRemark || '',
       AI_Toll_VerificationRemark:data.AI_Toll_VerificationRemark|| ''
-
     });
 
 
@@ -289,13 +290,9 @@ export class AiTollVerificationComponent {
     let sendObj = {
       "logId": +this.editObj.logid,
       "aI_Category": this.editObj.aI_Category || '',
-      "aI_SubCategory": this.topCategoryArray.find((res: any) => res.id == formData.TopAnalysissubCategoryType).subCategory,
-      "remark": this.editObj.remark,
-      "validity": true,
+      "aI_SubCategory": formData.TopAnalysissubCategoryType,//this.topCategoryArray.find((res: any) => res.id == formData.TopAnalysissubCategoryType).subCategory,
       "createdBy": 1,
-      "imagePath": "",
       "reasonType": "",
-      "imageCategory": "",
       "numberPlateDetected": formData.vehicleNumberPlate,
       "frontVehicleDetected": formData.frontViewVehicle,
       "topVehicleDetected": formData.TopVehicleDetected,
@@ -306,13 +303,16 @@ export class AiTollVerificationComponent {
       "frontAnalysis": formData.vehicleFrontAnalysis,
       "topAnalysis": formData.TopAnalysis,
       "vehicleNo_Available": formData.vehicleNumberDetected,
-      "vehicleTypeId": +this.topCategoryArray.find((res: any) => res.id == formData.TopAnalysissubCategoryType).id,
+      "vehicleTypeId": 0,//+this.topCategoryArray.find((res: any) => res.id == formData.TopAnalysissubCategoryType).id,
       "aI_VehicleType": formData.vehicleFrontAnalysisType.toString(),
-      "vehicleDetected": formData.VehicleDetected
+      "vehicleDetected": formData.VehicleDetected,
+      "IsReVerified": false,
+      "isCompleted": 1,
+      "aI_Toll_VerificationRemark": formData.aI_Toll_VerificationRemark || 'test'
     }
 
     if (confirm('Are you sure you want to update this record?')) {//
-      this.apiService.setHttp('put', 'action-taken/UpdateAICategory_v1', false, sendObj, false, 'mineralMappingUrl');
+      this.apiService.setHttp('put', 'MP/monitoring/AICategoryTollPlazzaListReverification', false, sendObj, false, 'mpDssBaseUrl');
       this.apiService.getHttp().subscribe({
         next: (res: any) => {
           if (res.statusCode == "200") {
@@ -338,6 +338,7 @@ export class AiTollVerificationComponent {
 
 
   imageType(selObj: any, imageView: any, isPredicateImg: any) {
+
     return selObj.log_PhotoDetailsModel.find((ele: any) => ele.photoView == imageView && ele.isPredicatesImages == isPredicateImg);
   }
 
@@ -379,7 +380,7 @@ export class AiTollVerificationComponent {
   }
 
   checkRawNo(obj: any) {
-    let rawVehicle = obj?.vehicle_OriginalNo ? obj?.vehicle_OriginalNo : obj?.vehicleno;
+    let rawVehicle = obj?.raw_vehicleno ? obj?.raw_vehicleno : obj?.vehicleNumber;
     this.updateFrom.getRawValue().vehicleNumberInput.toUpperCase() == rawVehicle.toUpperCase() ? (this.updateFrom.controls['vehicleNumberDetected'].setValue('Yes'), this.updateFrom.get('vehicleNumberInput').disable(), this.updateFrom.get('vehicleNumberDetected').enable()) : '';
   }
 
@@ -441,6 +442,46 @@ export class AiTollVerificationComponent {
     this.updateFrom.get('TopAnalysis').enable();
     this.updateFrom.get('TopAnalysissubCategoryType').enable();
     this.updateFrom.get('TopAnalysisRemark').enable();
+  }
+
+  exportExcel() {
+    this.apiService.setHttp('GET', 'action-taken/get-AICategoryReverificationDetails?FromDate=' + this.datePipe.transform(this.filterFrom.value.from, 'yyyy/MM/dd') + '&ToDate=' + this.datePipe.transform(this.filterFrom.value.to, 'yyyy/MM/dd'), false, false, false, 'mineralMappingUrl');
+    this.apiService.getHttp().subscribe({
+      next: (res: any) => {
+        if (res.statusCode == "200") {
+          this.downloadExcel(res.responseData);
+        } else {
+
+          this.commonService.snackBar('No data found', 1);
+        }
+      },
+      error: (e: any) => {
+        this.errorService.handelError(e.status);
+      }
+    });
+  }
+
+  downloadExcel(data?: any) {
+    // this.excelPdfDownload.generateExcel1()
+    // return
+    let pageName = 'Stockyard Details Report';
+    let headerData = {
+      fromDate: '18/04/2023',
+      toDate: '19/04/2023',
+      key1: 'Application Types',
+      value1: 'All',
+      key2: 'Minerals',
+      value2: 'All'
+    }
+    let header = ['logid ', 'Date', 'Time', 'Lane No.', 'Vehicle Box Predicted Correctly', 'Vehicle Box Predicted Correctly', 'ANPR Predicted', 'ANPR GT', 'ANPR Class Match', 'Comment ANPR', 'Front Box Predicted Correctly', 'Front Class Predicted', 'Front Class GT', 'Front Class Match', 'Comment Front', 'Top Box Predicted Correctly', 'Top Class Predicted', 'Top Class GT', 'Top Class Match', 'Top Class Match']
+    let keys = ['logId', 'date', 'time', 'lane_id', 'vehicle_Box_Predicted_Correctly', 'number_Plate_Box_Predicted_Correctly', 'anpR_Predicted', 'anpR_GT', 'anpR_Predicted_GT', 'comment_ANPR', 'front_Box_Predicted_Correctly', 'front_Class_Predicted', 'front_Class_GT', 'front_Class_Predicted_GT', 'comment_Front', 'top_Box_Predicted_Correctly', 'top_Class_Predicted', 'top_Class_GT', 'top_Class_Predicted_GT', 'comment_Top']
+    data.map((ele: any) => {
+      ele.date=this.datePipe.transform(ele.date,'dd/MM/yyyy'),
+      ele.time=this.datePipe.transform(ele.time,'short')?.split('.')[1],
+      ele.lane_id = 'Lane -'+ele.lane_id
+    })
+    let columnWidth = [15, 15, 25, 25, 25, 25]
+    this.excelPdfDownload.generateExcel(header, keys, data, pageName, headerData, columnWidth);
   }
 }
 

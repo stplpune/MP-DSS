@@ -1,7 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Injectable } from '@angular/core';
-import { Workbook } from 'exceljs';
-
+// import { Workbook } from 'exceljs';
+import * as Excel from "exceljs"
 var FileSaver= require('file-saver');
 @Injectable({
   providedIn: 'root'
@@ -20,7 +20,7 @@ this.datePipe
   } else {
     keyCenterNo = String.fromCharCode(Math.ceil(apiKeys.length / 2) + 64)
   } */
-  const workbook = new Workbook();
+  const workbook = new Excel.Workbook();
   const worksheet = workbook.addWorksheet('stockyard');
   // worksheet.getRow(1).height = 35;
   // worksheet.mergeCells('A1:'+keyCNo+'1')
