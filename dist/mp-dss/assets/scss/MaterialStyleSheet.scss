@@ -1,0 +1,174 @@
+/* default font and font size set */
+.mdc-form-field,
+.mdc-tab__content,
+.mat-mdc-snack-bar-label,
+.mat-button-toggle-button,
+.mdc-floating-label,
+.mat-mdc-input-element,
+.mdc-list-item__primary-text,
+.mat-mdc-menu-item-text,
+.mat-mdc-select-value,
+.mat-select-search-input,
+.mat-mdc-chip {
+    font-family: 'Rubik', sans-serif !important;
+    font-size: 0.85rem !important;
+    letter-spacing: normal !important;
+    color: #000;
+}
+
+/* mat controls label color set */
+.mdc-floating-label mat-label {
+    color: #000;
+}
+
+/* label in form controls position changed */
+.mat-mdc-text-field-wrapper .mat-mdc-form-field-flex .mat-mdc-floating-label {
+    top: 16px !important;
+}
+
+/* background & border color for checkbox set to default color */
+.mdc-checkbox .mdc-checkbox__native-control:enabled:checked~.mdc-checkbox__background {
+    border-color: var(--main-color) !important;
+    background-color: var(--main-color) !important;
+}
+
+/* background color for radiobutton set to default color */
+.mat-mdc-radio-button.mat-mdc-radio-checked .mdc-radio__background::before {
+    background-color: var(--main-color) !important;
+}
+
+/* border color for radiobutton set to default color */
+.mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:enabled:checked+.mdc-radio__background .mdc-radio__outer-circle,
+.mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:enabled+.mdc-radio__background .mdc-radio__inner-circle {
+    border-color: var(--main-color) !important;
+}
+
+/* border radius set to mat button toggle */
+.mat-button-toggle-group {
+    border-radius: 30px !important;
+}
+
+/* mat button toggle checked bgcolor set */
+.mat-button-toggle-group .mat-button-toggle-checked {
+    background-color: var(--main-color) !important;
+    color: #fff !important;
+}
+
+/* icon in mat switch toggle button hide */
+.mdc-switch__icons {
+    display: none !important;
+}
+
+/* mat menu customized */
+.mat-menu {
+    font-size: 0.85rem !important;
+    padding: 5px !important;
+}
+
+.mat-menu .mat-mdc-menu-content {
+    padding: 0px !important;
+}
+
+.mat-menu .mat-mdc-menu-content .mat-mdc-menu-item {
+    min-height: 36px;
+    border-radius: 0.375rem;
+}
+
+.mat-menu .mat-mdc-menu-content .mat-mdc-menu-item {
+    display: flex !important;
+    align-items: center !important;
+}
+
+.mat-menu .mat-mdc-menu-content .mat-mdc-menu-item .material-symbols-rounded {
+    font-size: 1.2rem;
+    margin-right: 5px;
+    height: 20px;
+}
+
+/* error message css */
+.error,
+.mat-mdc-form-field-error {
+    color: rgb(220, 53, 69);
+    font-size: 0.7rem;
+    font-family: 'Public Sans', sans-serif !important;
+    letter-spacing: normal;
+    margin-top: -5px;
+}
+
+/* prefix icon in textbox CSS */
+.mat-mdc-form-field-icon-prefix>.mat-icon {
+    padding: 0 0 0 10px !important;
+    font-size: 1.2rem;
+    height: 20px;
+    color: var(--main-color);
+}
+
+/* suffix icon in textbox CSS */
+.mat-mdc-form-field-icon-suffix .mat-icon {
+    font-size: 1.2rem;
+    height: 19px;
+}
+
+/* svg icon in datepicker height adjusted */
+.mat-datepicker-toggle svg {
+    height: 18px !important;
+}
+
+/* mat select customize css */
+.mat-mdc-select-panel {
+    border-radius: 0.375rem !important;
+}
+
+.mat-mdc-select-panel .mat-mdc-option {
+    min-height: 36px;
+}
+
+.mat-mdc-option:focus.mdc-list-item,
+.mat-mdc-option.mat-mdc-option-active.mdc-list-item,
+.mat-mdc-option:hover:not(.mdc-list-item--disabled) {
+    background-color: #eee !important;
+}
+
+/* mat tab body scroll issue resolved*/
+.mat-mdc-tab-body-content {
+    padding: 10px 15px;
+}
+
+.mat-mdc-tab-labels {
+    height: 45px !important;
+    background: #eee !important;
+    border-radius: 30px;
+}
+
+.mdc-tab .mat-ripple {
+    border-radius: 30px !important;
+}
+
+.mdc-tab {
+    padding-inline: 20px !important;
+    margin: 5px 5px 0 5px !important;
+    border-radius: 30px !important;
+    height: 34px !important;
+}
+
+.mdc-tab-indicator {
+    display: none !important;
+}
+
+.mdc-tab:active,
+.mdc-tab.active,
+.mdc-tab:hover,
+.mdc-tab-indicator--active {
+    background-color: var(--main-color) !important;
+}
+
+.mdc-tab:active .mdc-tab__text-label,
+.mdc-tab.active .mdc-tab__text-label,
+.mdc-tab:hover .mdc-tab__text-label {
+    color: #fff !important;
+}
+
+.mat-mdc-tab:focus .mdc-tab__text-label,
+.mat-mdc-tab.mdc-tab--active .mdc-tab__text-label {
+    color: #fff !important;
+}
