@@ -257,7 +257,7 @@ export class AiTollVehicleUpdateComponent {
       vehicleFrontAnalysisRemark: data.frontVehicleRemark || '',
       TopVehicleDetected: data.topVehicleDetected || 'Yes',
       TopAnalysis: data.topAnalysis == 'No' ? data.topAnalysis : 'Yes',
-      TopAnalysissubCategoryType: data?.aiSubCategoryId,
+      TopAnalysissubCategoryType: data?.aI_SubCategory,
       TopAnalysisRemark: data.topVehicleRemark || '',
       AI_Toll_VerificationRemark:data.AI_Toll_VerificationRemark|| ''
     });
