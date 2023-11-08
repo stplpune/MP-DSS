@@ -75,11 +75,10 @@
         </div>
         <div class="col-sm-auto">
           <button mat-flat-button class="btn-main" (click)="pageNumber =1 ; getData()">Apply</button>
-          <button mat-flat-button class="" (click)="exportExcel()">
+          <button mat-flat-button class="" (click)="exportExcel()" *ngIf="iscompleted == 1">
             <mat-icon class="material-symbols-rounded">
               description
           </mat-icon>
-
           Excel</button>
         </div>
       </div>
