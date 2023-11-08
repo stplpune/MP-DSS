@@ -86,7 +86,7 @@
   </mat-card-header>
   <mat-card-content class="card-body">
     <mat-tab-group (selectedTabChange)="tabClick($event);">
-      <mat-tab label="IN PROGRESS">
+      <mat-tab label="COMPLETED">
         <div class="table-responsive table-content scrollbar">
           <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="dashboard-table">
             <ng-container matColumnDef="SrNo">
@@ -362,7 +362,7 @@
                       </div>
                       <div class="col-sm-2 text-end">
                         <button mat-flat-button class="btn-main" (click)="saveUpdate(true)">Correct</button>
-                        <button mat-flat-button class="ms-2" color="warn" *ngIf="iscompleted == 1" (click)="saveUpdate(false)">
+                        <button mat-flat-button class="ms-2" color="warn" (click)="saveUpdate(false)">
                          Wrong
                         </button>
                       </div>
@@ -387,7 +387,7 @@
           </ng-container>
         </div>
       </mat-tab>
-      <mat-tab label="COMPLETED">
+      <mat-tab label="REVERIFIED">
         <div class="table-responsive table-content scrollbar">
           <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="dashboard-table">
             <ng-container matColumnDef="SrNo">

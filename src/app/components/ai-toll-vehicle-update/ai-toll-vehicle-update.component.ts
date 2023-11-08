@@ -218,7 +218,6 @@ export class AiTollVehicleUpdateComponent {
 
   onClickFold(data: any, flag: any) {
     this.editObj = data;
-    console.log(this.editObj);
     this.defaultFrom();
     this.updateFrom.patchValue({
       VehicleDetected: data.vehicleDetected == 'No' ? data.vehicleDetected : 'Yes',
@@ -234,7 +233,7 @@ export class AiTollVehicleUpdateComponent {
       TopAnalysis: data.topAnalysis == 'No' ? data.topAnalysis : 'Yes',
       TopAnalysissubCategoryType: data?.aI_SubCategory,
       TopAnalysisRemark: data.topVehicleRemark || '',
-      AI_Toll_VerificationRemark:data.AI_Toll_VerificationRemark|| ''
+      AI_Toll_VerificationRemark: data.aI_Toll_VerificationRemark|| ''
     });
 
 
@@ -281,8 +280,9 @@ export class AiTollVehicleUpdateComponent {
       "aI_VehicleType": formData.vehicleFrontAnalysisType.toString(),
       "vehicleDetected": formData.VehicleDetected,
       "IsReVerified": flag,
-      "isCompleted": flag ? 1 : 0,
-      "aI_Toll_VerificationRemark": formData.aI_Toll_VerificationRemark
+      "aI_Toll_VerificationRemark": formData.AI_Toll_VerificationRemark,
+      "isCompleted": flag ? 1 : 0
+
     }
 
     if (confirm('Are you sure you want to update this record?')) {//

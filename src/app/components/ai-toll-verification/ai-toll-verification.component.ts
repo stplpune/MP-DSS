@@ -259,7 +259,7 @@ export class AiTollVerificationComponent {
       TopAnalysis: data.topAnalysis == 'No' ? data.topAnalysis : 'Yes',
       TopAnalysissubCategoryType: data?.aI_SubCategory,
       TopAnalysisRemark: data.topVehicleRemark || '',
-      AI_Toll_VerificationRemark:data.AI_Toll_VerificationRemark|| ''
+      AI_Toll_VerificationRemark:data.aI_Toll_VerificationRemark|| ''
     });
 
 
@@ -307,7 +307,7 @@ export class AiTollVerificationComponent {
       "vehicleDetected": formData.VehicleDetected,
       "IsReVerified": false,
       "isCompleted": 1,
-      "aI_Toll_VerificationRemark": formData.aI_Toll_VerificationRemark
+      "aI_Toll_VerificationRemark": formData.AI_Toll_VerificationRemark
     }
 
     if (confirm('Are you sure you want to update this record?')) {//
