@@ -1,53 +1,4 @@
-<div class="row mb-3">
-  <div class="col-sm-4 ">
-    <div class="card  toll-plaza-card border-0">
-      <div class="card-body">
-        <div class="d-flex ">
-          <div class="flex-shrink-0">
-            <img src="assets/images/tolltruck.svg" alt="...">
-          </div>
-          <div class="flex-grow-1 mt-4 ms-3">
-            <h4 class="mb-0">{{totalVerifiedCountDetails?.inProgress || 0}}</h4>
-            <p class="fw-semibold">In Progress</p>
-          </div>
-          <img src="assets/images/tollCardBg.svg" alt="" class="cloud-img">
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="col-sm-4">
-    <div class="card  toll-plaza-card">
-      <div class="card-body">
-        <div class="d-flex ">
-          <div class="flex-shrink-0">
-            <img src="assets/images/tolltruck.svg" alt="...">
-          </div>
-          <div class="flex-grow-1 mt-4 ms-3">
-            <h4 class="mb-0">{{totalVerifiedCountDetails?.completed || 0}}</h4>
-            <p class="fw-semibold">In Progress</p>
-          </div>
-          <img src="assets/images/tollCardBg.svg" alt="" class="cloud-img">
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="col-sm-4">
-    <div class="card  toll-plaza-card">
-      <div class="card-body">
-        <div class="d-flex ">
-          <div class="flex-shrink-0">
-            <img src="assets/images/tolltruck.svg" alt="...">
-          </div>
-          <div class="flex-grow-1 mt-4 ms-3">
-            <h4 class="mb-0">{{totalVerifiedCountDetails?.inConclusion || 0}}</h4>
-            <p class="fw-semibold">In Progress</p>
-          </div>
-          <img src="assets/images/tollCardBg.svg" alt="" class="cloud-img">
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+
 <mat-card class="plain-card bg-white">
   <mat-card-header class="card-header-control">
     <form [formGroup]="filterFrom">
@@ -124,7 +75,12 @@
         </div>
         <div class="col-sm-auto">
           <button mat-flat-button class="btn-main" (click)="pageNumber =1 ; getData()">Apply</button>
-          <button mat-flat-button class="btn-main" (click)="exportExcel()">Excel</button>
+          <button mat-flat-button class="" (click)="exportExcel()">
+            <mat-icon class="material-symbols-rounded">
+              description
+          </mat-icon>
+
+          Excel</button>
         </div>
       </div>
     </form>
@@ -406,8 +362,8 @@
                         </mat-form-field>
                       </div>
                       <div class="col-sm-2 text-end">
-                        <button mat-flat-button class="btn-main" (click)="saveUpdate(true)">Update</button>
-                        <button mat-flat-button class="btn-icon mnw-auto ms-2" (click)="saveUpdate(false)">
+                        <button mat-flat-button class="btn-main" (click)="saveUpdate(true)">Correct</button>
+                        <button mat-flat-button class="ms-2" color="warn" *ngIf="iscompleted == 1" (click)="saveUpdate(false)">
                          Wrong
                         </button>
                       </div>
@@ -712,8 +668,10 @@
                         </mat-form-field>
                       </div>
                       <div class="col-sm-2 text-end">
-                        <button mat-flat-button class="btn-main" (click)="saveUpdate(false)">Update</button>
-
+                        <!-- <button mat-flat-button class="btn-main" (click)="saveUpdate(false)">Update</button> -->
+                        <button mat-flat-button class="ms-2"  color="warn" (click)="saveUpdate(false)">
+                          Wrong
+                         </button>
                       </div>
                     </div>
                   </form>

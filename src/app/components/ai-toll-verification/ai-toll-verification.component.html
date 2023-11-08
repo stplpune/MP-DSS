@@ -24,7 +24,7 @@
           </div>
           <div class="flex-grow-1 mt-4 ms-3">
             <h4 class="mb-0">{{totalVerifiedCountDetails?.completed || 0}}</h4>
-            <p class="fw-semibold">In Progress</p>
+            <p class="fw-semibold">Completed</p>
           </div>
           <img src="assets/images/tollCardBg.svg" alt="" class="cloud-img">
         </div>
@@ -40,7 +40,7 @@
           </div>
           <div class="flex-grow-1 mt-4 ms-3">
             <h4 class="mb-0">{{totalVerifiedCountDetails?.inConclusion || 0}}</h4>
-            <p class="fw-semibold">In Progress</p>
+            <p class="fw-semibold">In Conclusion</p>
           </div>
           <img src="assets/images/tollCardBg.svg" alt="" class="cloud-img">
         </div>
@@ -124,7 +124,6 @@
         </div>
         <div class="col-sm-auto">
           <button mat-flat-button class="btn-main" (click)="pageNumber =1 ; getData()">Apply</button>
-          <button mat-flat-button class="btn-main" (click)="exportExcel()">Excel</button>
         </div>
       </div>
     </form>

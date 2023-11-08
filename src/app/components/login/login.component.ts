@@ -85,7 +85,7 @@ export class LoginComponent {
       return
     }
     this.spinner.show();
-    this.apiService.setHttp('POST', 'MP/UserMaster/UserLogin', true, submitObj, false, 'mpDssBaseUrl');
+    this.apiService.setHttp('POST', 'MP/UserMaster/UserLogin', true, submitObj, false, 'MPDSSBaseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
         if(res.statusCode == 200){

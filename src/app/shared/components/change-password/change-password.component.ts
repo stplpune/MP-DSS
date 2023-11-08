@@ -45,7 +45,7 @@ export class ChangePasswordComponent {
 
   ngOnInit() {
     this.loginUser = this.webStorage.getLocalStorageData();
-    this.defaultForm();  
+    this.defaultForm();
   }
 
   get f() {
@@ -77,7 +77,7 @@ export class ChangePasswordComponent {
         "oldPassword": formData.currentPass
       }
 
-      this.apiService.setHttp('post', 'MP/UserMaster/ResetPassword', false, obj, false, 'mpDssBaseUrl');
+      this.apiService.setHttp('post', 'MP/UserMaster/ResetPassword', false, obj, false, 'MPDSSBaseUrl');
       this.apiService.getHttp().subscribe((res: any) => {
         if (res.statusCode == 200) {
           this.commonMethods.snackBar(res.statusMessage, 0);

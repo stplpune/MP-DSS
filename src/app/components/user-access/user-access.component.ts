@@ -62,7 +62,7 @@ export class UserAccessComponent {
      this.spinner.show();
      let queryParam = '';
      queryParam = '?UserTypeId=' + 1 + '&Textsearch=' + this.TextSearch.value?.trim();
-      this.apiService.setHttp('GET', 'MP/UserPage/GetByCriteria' + queryParam, false, false, false, 'mpDssBaseUrl')
+      this.apiService.setHttp('GET', 'MP/UserPage/GetByCriteria' + queryParam, false, false, false, 'MPDSSBaseUrl')
       this.apiService.getHttp().subscribe({
         next: (res: any) => {
           this.spinner.hide();
@@ -76,15 +76,15 @@ export class UserAccessComponent {
         },
         error: ((err: any) => { this.spinner.hide(),this.errorService.handelError(err), this.dataSource = []; })
       });
-    } 
+    }
 
     // pageChanged(_event: any) {
     //   this.pageNumber = event.pageIndex + 1;
     //   this.getPagesAccessList();
     // }
 
-    selectRow(event:any, i:any){  
-      let allStatus : any = event.checked ? true : false;  
+    selectRow(event:any, i:any){
+      let allStatus : any = event.checked ? true : false;
      this.dataSource[i].addFlag = allStatus;
      this.dataSource[i].viewFlag = allStatus;
      this.dataSource[i].updateFlag = allStatus;
@@ -115,7 +115,7 @@ export class UserAccessComponent {
         pageAccessArray.push(obj);
       })
 
-      this.apiService.setHttp('post', 'MP/UserPage/AddRecord', false, pageAccessArray, false, 'mpDssBaseUrl');
+      this.apiService.setHttp('post', 'MP/UserPage/AddRecord', false, pageAccessArray, false, 'MPDSSBaseUrl');
       this.apiService.getHttp().subscribe({
       next: ((res: any) => {
         this.spinner.hide();

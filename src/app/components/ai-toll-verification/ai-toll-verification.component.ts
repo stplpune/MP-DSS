@@ -87,7 +87,6 @@ export class AiTollVerificationComponent {
     private errorService: ErrorsService,
     public Validation:ValidationService,
     private dateAdapter: DateAdapter<Date>,
-    private excelPdfDownload:ExcelPfdDownloadedService
   ) {
     this.dateAdapter.setLocale('en-GB');
   }
@@ -138,7 +137,7 @@ export class AiTollVerificationComponent {
   }
 
   bindDistrict(stateId: number) {
-    this.apiService.setHttp('GET', 'MP/Master/GetAllDistricts?StateId=' + stateId, false, false, false, 'mpDssBaseUrl');
+    this.apiService.setHttp('GET', 'MP/Master/GetAllDistricts?StateId=' + stateId, false, false, false, 'MPDSSBaseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == "200") {
@@ -158,7 +157,7 @@ export class AiTollVerificationComponent {
 
   // ----
   bindTopCategory() {
-    this.apiService.setHttp('GET', 'MP/monitoring/get-ai-model-subcategory', false, false, false, 'mpDssBaseUrl');
+    this.apiService.setHttp('GET', 'MP/monitoring/get-ai-model-subcategory', false, false, false, 'MPDSSBaseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == "200") {
@@ -189,7 +188,7 @@ export class AiTollVerificationComponent {
     queryParam += '&AI_SubCategory=' + topClass  + '&FrontClassName=' + fromData.FrontClassName + '&Status=' + fromData.Status + '&TextSearch=' + fromData.TextSearch
     if (fromData.dist) { queryParam += '&dist=' + fromData.dist }
     if (fromData.Laneid) { queryParam += '&Laneid=' + fromData.Laneid }
-    this.apiService.setHttp('GET', 'MP/monitoring/GetAIModelVerificationTollPlaza' + queryParam, false, false, false, 'mpDssBaseUrl');
+    this.apiService.setHttp('GET', 'MP/monitoring/GetAIModelVerificationTollPlaza' + queryParam, false, false, false, 'MPDSSBaseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == "200") {
@@ -308,11 +307,11 @@ export class AiTollVerificationComponent {
       "vehicleDetected": formData.VehicleDetected,
       "IsReVerified": false,
       "isCompleted": 1,
-      "aI_Toll_VerificationRemark": formData.aI_Toll_VerificationRemark || 'test'
+      "aI_Toll_VerificationRemark": formData.aI_Toll_VerificationRemark
     }
 
     if (confirm('Are you sure you want to update this record?')) {//
-      this.apiService.setHttp('put', 'MP/monitoring/AICategoryTollPlazzaListReverification', false, sendObj, false, 'mpDssBaseUrl');
+      this.apiService.setHttp('put', 'MP/monitoring/AICategoryTollPlazzaListReverification', false, sendObj, false, 'MPDSSBaseUrl');
       this.apiService.getHttp().subscribe({
         next: (res: any) => {
           if (res.statusCode == "200") {
@@ -444,44 +443,5 @@ export class AiTollVerificationComponent {
     this.updateFrom.get('TopAnalysisRemark').enable();
   }
 
-  exportExcel() {
-    this.apiService.setHttp('GET', 'action-taken/get-AICategoryReverificationDetails?FromDate=' + this.datePipe.transform(this.filterFrom.value.from, 'yyyy/MM/dd') + '&ToDate=' + this.datePipe.transform(this.filterFrom.value.to, 'yyyy/MM/dd'), false, false, false, 'mineralMappingUrl');
-    this.apiService.getHttp().subscribe({
-      next: (res: any) => {
-        if (res.statusCode == "200") {
-          this.downloadExcel(res.responseData);
-        } else {
-
-          this.commonService.snackBar('No data found', 1);
-        }
-      },
-      error: (e: any) => {
-        this.errorService.handelError(e.status);
-      }
-    });
-  }
-
-  downloadExcel(data?: any) {
-    // this.excelPdfDownload.generateExcel1()
-    // return
-    let pageName = 'Stockyard Details Report';
-    let headerData = {
-      fromDate: '18/04/2023',
-      toDate: '19/04/2023',
-      key1: 'Application Types',
-      value1: 'All',
-      key2: 'Minerals',
-      value2: 'All'
-    }
-    let header = ['logid ', 'Date', 'Time', 'Lane No.', 'Vehicle Box Predicted Correctly', 'Vehicle Box Predicted Correctly', 'ANPR Predicted', 'ANPR GT', 'ANPR Class Match', 'Comment ANPR', 'Front Box Predicted Correctly', 'Front Class Predicted', 'Front Class GT', 'Front Class Match', 'Comment Front', 'Top Box Predicted Correctly', 'Top Class Predicted', 'Top Class GT', 'Top Class Match', 'Top Class Match']
-    let keys = ['logId', 'date', 'time', 'lane_id', 'vehicle_Box_Predicted_Correctly', 'number_Plate_Box_Predicted_Correctly', 'anpR_Predicted', 'anpR_GT', 'anpR_Predicted_GT', 'comment_ANPR', 'front_Box_Predicted_Correctly', 'front_Class_Predicted', 'front_Class_GT', 'front_Class_Predicted_GT', 'comment_Front', 'top_Box_Predicted_Correctly', 'top_Class_Predicted', 'top_Class_GT', 'top_Class_Predicted_GT', 'comment_Top']
-    data.map((ele: any) => {
-      ele.date=this.datePipe.transform(ele.date,'dd/MM/yyyy'),
-      ele.time=this.datePipe.transform(ele.time,'short')?.split('.')[1],
-      ele.lane_id = 'Lane -'+ele.lane_id
-    })
-    let columnWidth = [15, 15, 25, 25, 25, 25]
-    this.excelPdfDownload.generateExcel(header, keys, data, pageName, headerData, columnWidth);
-  }
 }
 

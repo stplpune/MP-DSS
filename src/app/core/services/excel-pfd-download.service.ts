@@ -10,7 +10,7 @@ export class ExcelPfdDownloadedService {
   constructor(private datePipe:DatePipe){}
 
 
- generateExcel(header:any,apiKeys:any,data:any,_pageName?:any,_headerData?:any,columnWidth?:any) {
+ generateExcel(header:any,apiKeys:any,data:any,pageName?:any,_headerData?:any,columnWidth?:any) {
 this.datePipe
   // let keyCenterNo = "";
   // let keyCNo = String.fromCharCode(Math.ceil(apiKeys.length) + 64);
@@ -21,7 +21,7 @@ this.datePipe
     keyCenterNo = String.fromCharCode(Math.ceil(apiKeys.length / 2) + 64)
   } */
   const workbook = new Excel.Workbook();
-  const worksheet = workbook.addWorksheet('stockyard');
+  const worksheet = workbook.addWorksheet(pageName);
   // worksheet.getRow(1).height = 35;
   // worksheet.mergeCells('A1:'+keyCNo+'1')
     //
@@ -87,7 +87,7 @@ this.datePipe
       const blob = new Blob([data], {
         type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
       });
-      FileSaver.saveAs(blob, 'stockyard');
+      FileSaver.saveAs(blob, pageName);
     });
   }
 }

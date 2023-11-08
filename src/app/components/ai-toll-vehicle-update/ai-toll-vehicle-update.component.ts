@@ -133,11 +133,11 @@ export class AiTollVehicleUpdateComponent {
       frontdllremark: [''],
       topdllremark: [''],
     })
-    this.updateFrom.controls['AI_Toll_VerificationRemark'].disable();
+   // this.updateFrom.controls['AI_Toll_VerificationRemark'].disable();
   }
 
   bindDistrict(stateId: number) {
-    this.apiService.setHttp('GET', 'MP/Master/GetAllDistricts?StateId=' + stateId, false, false, false, 'mpDssBaseUrl');
+    this.apiService.setHttp('GET', 'MP/Master/GetAllDistricts?StateId=' + stateId, false, false, false, 'MPDSSBaseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == "200") {
@@ -157,7 +157,7 @@ export class AiTollVehicleUpdateComponent {
 
   // ----
   bindTopCategory() {
-    this.apiService.setHttp('GET', 'MP/monitoring/get-ai-model-subcategory', false, false, false, 'mpDssBaseUrl');
+    this.apiService.setHttp('GET', 'MP/monitoring/get-ai-model-subcategory', false, false, false, 'MPDSSBaseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == "200") {
@@ -180,15 +180,13 @@ export class AiTollVehicleUpdateComponent {
     this.spinner.show();
     let queryParam = '';
     let fromData = this.filterFrom.value;
-    console.log(this.topCategoryArray);
-    this.getTotalCount();
     let topClass= fromData.AI_SubCategory == 0 ? '':this.topCategoryArray.find((ele:any)=>ele.id == fromData.AI_SubCategory).subCategory
     queryParam = '?from=' + this.datePipe.transform(fromData.from, 'dd/MM/yyyy')
     queryParam += '&to=' + this.datePipe.transform(fromData.to, 'dd/MM/yyyy') + '&Status=' + fromData.Status + '&pagesize=10&pageno=' + this.pageNumber + "&isCompleted=1&IsReVerified=" + this.iscompleted
     queryParam += '&AI_SubCategory=' + topClass  + '&FrontClassName=' + fromData.FrontClassName + '&Status=' + fromData.Status + '&TextSearch=' + fromData.TextSearch
     if (fromData.dist) { queryParam += '&dist=' + fromData.dist }
     if (fromData.Laneid) { queryParam += '&Laneid=' + fromData.Laneid }
-    this.apiService.setHttp('GET', 'MP/monitoring/GetAIModelVerificationTollPlaza' + queryParam, false, false, false, 'mpDssBaseUrl');
+    this.apiService.setHttp('GET', 'MP/monitoring/GetAIModelVerificationTollPlaza' + queryParam, false, false, false, 'MPDSSBaseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == "200") {
@@ -211,30 +209,7 @@ export class AiTollVehicleUpdateComponent {
     });
   }
 
-  getTotalCount() {
-    let queryParam = '';
-    let fromData = this.filterFrom.value;
-    let topClass= fromData.AI_SubCategory == 0 ? '':this.topCategoryArray.find((ele:any)=>ele.id == fromData.AI_SubCategory).subCategory
-    queryParam = '?from=' + this.datePipe.transform(fromData.from, 'dd/MM/yyyy')
-    queryParam += '&to=' + this.datePipe.transform(fromData.to, 'dd/MM/yyyy') + '&Status=' + fromData.Status + '&pagesize=10&pageno=' + this.pageNumber + "&isCompleted=" + this.iscompleted
-    queryParam += '&AI_SubCategory=' +topClass + '&FrontClassName=' + fromData.FrontClassName + '&Status=' + fromData.Status + '&TextSearch=' + fromData.TextSearch
-    if (fromData.dist) { queryParam += '&dist=' + fromData.dist }
-    if (fromData.Laneid) { queryParam += '&Laneid=' + fromData.Laneid }
-    this.apiService.setHttp('GET', 'action-taken/getTollPlazzaMonitoringCount' + queryParam, false, false, false, 'mineralMappingUrl');
-    this.apiService.getHttp().subscribe({
-      next: (res: any) => {
-        if (res.statusCode == "200") {
-          this.totalVerifiedCountDetails = res.responseData;
-        } else {
-          this.totalVerifiedCountDetails = '';
-          res.statusCode == 404 ? '' : this.errorService.handelError(res.statusCode);
-        }
-      },
-      error: (e: any) => {
-        this.errorService.handelError(e.status);
-      }
-    });
-  }
+
 
   pageChanged(event: any) {
     this.pageNumber = event.pageIndex + 1;
@@ -306,12 +281,12 @@ export class AiTollVehicleUpdateComponent {
       "aI_VehicleType": formData.vehicleFrontAnalysisType.toString(),
       "vehicleDetected": formData.VehicleDetected,
       "IsReVerified": flag,
-      "isCompleted": 1,
-      "aI_Toll_VerificationRemark": formData.aI_Toll_VerificationRemark || 'test'
+      "isCompleted": flag ? 1 : 0,
+      "aI_Toll_VerificationRemark": formData.aI_Toll_VerificationRemark
     }
 
     if (confirm('Are you sure you want to update this record?')) {//
-      this.apiService.setHttp('put', 'MP/monitoring/AICategoryTollPlazzaListReverification', false, sendObj, false, 'mpDssBaseUrl');
+      this.apiService.setHttp('put', 'MP/monitoring/AICategoryTollPlazzaListReverification', false, sendObj, false, 'MPDSSBaseUrl');
       this.apiService.getHttp().subscribe({
         next: (res: any) => {
           if (res.statusCode == "200") {
@@ -444,7 +419,7 @@ export class AiTollVehicleUpdateComponent {
   }
 
   exportExcel() {
-    this.apiService.setHttp('GET', 'action-taken/get-AICategoryReverificationDetails?FromDate=' + this.datePipe.transform(this.filterFrom.value.from, 'yyyy/MM/dd') + '&ToDate=' + this.datePipe.transform(this.filterFrom.value.to, 'yyyy/MM/dd'), false, false, false, 'mineralMappingUrl');
+    this.apiService.setHttp('GET', 'MP/monitoring/get-AICategoryReverificationDetails?FromDate=' + this.datePipe.transform(this.filterFrom.value.from, 'yyyy/MM/dd') + '&ToDate=' + this.datePipe.transform(this.filterFrom.value.to, 'yyyy/MM/dd'), false, false, false, 'MPDSSBaseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == "200") {
@@ -461,22 +436,13 @@ export class AiTollVehicleUpdateComponent {
   }
 
   downloadExcel(data?: any) {
-    // this.excelPdfDownload.generateExcel1()
-    // return
-    let pageName = 'Stockyard Details Report';
-    let headerData = {
-      fromDate: '18/04/2023',
-      toDate: '19/04/2023',
-      key1: 'Application Types',
-      value1: 'All',
-      key2: 'Minerals',
-      value2: 'All'
-    }
+    let pageName = 'AI Toll Reverified List';
+    let headerData = { fromDate: '18/04/2023', key1: 'Application Types', value1: 'All', key2: 'Minerals',  value2: 'All'}
     let header = ['logid ', 'Date', 'Time', 'Lane No.', 'Vehicle Box Predicted Correctly', 'Vehicle Box Predicted Correctly', 'ANPR Predicted', 'ANPR GT', 'ANPR Class Match', 'Comment ANPR', 'Front Box Predicted Correctly', 'Front Class Predicted', 'Front Class GT', 'Front Class Match', 'Comment Front', 'Top Box Predicted Correctly', 'Top Class Predicted', 'Top Class GT', 'Top Class Match', 'Top Class Match']
     let keys = ['logId', 'date', 'time', 'lane_id', 'vehicle_Box_Predicted_Correctly', 'number_Plate_Box_Predicted_Correctly', 'anpR_Predicted', 'anpR_GT', 'anpR_Predicted_GT', 'comment_ANPR', 'front_Box_Predicted_Correctly', 'front_Class_Predicted', 'front_Class_GT', 'front_Class_Predicted_GT', 'comment_Front', 'top_Box_Predicted_Correctly', 'top_Class_Predicted', 'top_Class_GT', 'top_Class_Predicted_GT', 'comment_Top']
     data.map((ele: any) => {
       ele.date=this.datePipe.transform(ele.date,'dd/MM/yyyy'),
-      ele.time=this.datePipe.transform(ele.time,'short')?.split('.')[1],
+      ele.time=this.datePipe.transform(ele.time,'hh:mm:ss a'),
       ele.lane_id = 'Lane -'+ele.lane_id
     })
     let columnWidth = [15, 15, 25, 25, 25, 25]
