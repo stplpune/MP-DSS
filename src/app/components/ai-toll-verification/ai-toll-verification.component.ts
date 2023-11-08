@@ -220,7 +220,7 @@ export class AiTollVerificationComponent {
     queryParam += '&AI_SubCategory=' +topClass + '&FrontClassName=' + fromData.FrontClassName + '&Status=' + fromData.Status + '&TextSearch=' + fromData.TextSearch
     if (fromData.dist) { queryParam += '&dist=' + fromData.dist }
     if (fromData.Laneid) { queryParam += '&Laneid=' + fromData.Laneid }
-    this.apiService.setHttp('GET', 'action-taken/getTollPlazzaMonitoringCount' + queryParam, false, false, false, 'mineralMappingUrl');
+    this.apiService.setHttp('GET', 'MP/monitoring/getTollPlazzaMonitoringCount' + queryParam, false, false, false, 'MPDSSBaseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == "200") {
