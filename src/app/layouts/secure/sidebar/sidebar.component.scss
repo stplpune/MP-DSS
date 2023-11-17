@@ -57,7 +57,7 @@
     border-radius: 5px;
     padding-right: 10px;
     margin-bottom: 2px;
-    background: linear-gradient(to right, var(--sidebar-bg-dark-color) 50%, transparent 0%);
+    background: linear-gradient(to right, var(--main-dark-color) 50%, transparent 0%);
     background-size: 200% 100%;
     background-position: right bottom;
     transition: all 0.4s ease;
@@ -94,9 +94,12 @@
 }
 
 .submenu {
-    background-color: var(--sidebar-bg-dark-color);
+    // background-color: var(--main-light-color);
     padding: 15px;
     border-radius: 5px;
+}
+.submenu li{
+list-style: none;
 }
 
 .list-group a.list-group-item {
