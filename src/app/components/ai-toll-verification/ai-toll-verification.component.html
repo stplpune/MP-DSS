@@ -101,6 +101,7 @@
           <mat-form-field appearance="outline" class="w-100">
             <mat-label>Front Class Category</mat-label>
             <mat-select formControlName="FrontClassName">
+              <mat-option value="">All Front Class</mat-option>
               <mat-option *ngFor="let frontCat of front_cls_names" [value]="frontCat">{{frontCat}}</mat-option>
             </mat-select>
           </mat-form-field>
@@ -329,6 +330,7 @@
                             <mat-form-field appearance="outline" class="w-100">
                               <mat-select formControlName="vehicleFrontAnalysisType" placeholder="Select Vehicle Type"
                                 (selectionChange)="checkRawFrontClass(element)">
+                                <mat-option value="">All Front Class</mat-option>
                                 <mat-option *ngFor="let item of front_cls_names" [value]="item">{{item}}</mat-option>
                               </mat-select>
                             </mat-form-field>
@@ -704,7 +706,7 @@
                         </mat-form-field>
                       </div>
                       <div class="col-sm-2 text-end">
-                        <button mat-flat-button class="btn-main" (click)="saveUpdate()">Update</button>
+                        <!-- <button mat-flat-button class="btn-main" (click)="saveUpdate()">Update</button> -->
                         <button mat-flat-button class="btn-icon mnw-auto ms-2" (click)="openImage(element)">
                           <mat-icon class="material-symbols-rounded">
                             visibility

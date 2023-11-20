@@ -52,6 +52,7 @@
           <mat-form-field appearance="outline" class="w-100">
             <mat-label>Front Class Category</mat-label>
             <mat-select formControlName="FrontClassName">
+              <mat-option value="">All Front Class</mat-option>
               <mat-option *ngFor="let frontCat of front_cls_names" [value]="frontCat">{{frontCat}}</mat-option>
             </mat-select>
           </mat-form-field>

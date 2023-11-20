@@ -215,8 +215,8 @@ export class AiTollVerificationComponent {
     let queryParam = '';
     let fromData = this.filterFrom.value;
     let topClass= fromData.AI_SubCategory == 0 ? '':this.topCategoryArray.find((ele:any)=>ele.id == fromData.AI_SubCategory).subCategory
-    queryParam = '?from=' + this.datePipe.transform(fromData.from, 'dd/MM/yyyy')
-    queryParam += '&to=' + this.datePipe.transform(fromData.to, 'dd/MM/yyyy') + '&Status=' + fromData.Status + '&pagesize=10&pageno=' + this.pageNumber + "&isCompleted=" + this.iscompleted
+    queryParam = '?from=' + this.datePipe.transform(fromData.from, 'yyyy-MM-dd')
+    queryParam += '&to=' + this.datePipe.transform(fromData.to, 'yyyy-MM-dd') + '&Status=' + fromData.Status + '&pagesize=10&pageno=' + this.pageNumber + "&isCompleted=" + this.iscompleted
     queryParam += '&AI_SubCategory=' +topClass + '&FrontClassName=' + fromData.FrontClassName + '&Status=' + fromData.Status + '&TextSearch=' + fromData.TextSearch
     if (fromData.dist) { queryParam += '&dist=' + fromData.dist }
     if (fromData.Laneid) { queryParam += '&Laneid=' + fromData.Laneid }
