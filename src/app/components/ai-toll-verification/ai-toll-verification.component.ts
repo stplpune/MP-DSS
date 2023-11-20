@@ -196,7 +196,7 @@ export class AiTollVerificationComponent {
           var details = res.responseData.responseData1;
           details.map((ele: any, ind: number) => ele.srNo = (ind + 1 + (this.pageNumber - 1) * 10))
           this.dataSource = new MatTableDataSource(details);
-        //  this.totalRows = res.responseData.responseData2[0].totalPages;
+          this.totalRows = res.responseData.responseData2[0].totalCount;
         } else {
           this.spinner.hide();
           this.dataSource = [];
