@@ -56,7 +56,6 @@
     display: flex;
     align-items: center;
     cursor: pointer;
-    font-weight: 600;
 }
 
 .dropdown-menu .dropdown-item .material-symbols-rounded {
@@ -68,5 +67,6 @@
 .dropdown-menu .dropdown-item:active,
 .dropdown-menu .dropdown-item:hover {
     background-color: var(--main-light-color);
-    color: var(--main-color);
+    color: white !important;
+    font-weight: normal;
 }
