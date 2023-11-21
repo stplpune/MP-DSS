@@ -158,37 +158,39 @@
 
                   <mat-tab-group class="inner-tab">
                     <mat-tab label="Predicted">
-                      <div class="row gy-2 mb-4">
-                        <div class="col-sm-4">
-                          <div class="camera">
-                            <div class="img-wh">
-                              <div>
-                                <lib-ngx-image-zoom [thumbImage]="imageType(element, 'Anpr', 'Predication')?.imagePath"
-                                  [magnification]="1" [enableScrollZoom]="true" [enableLens]="true" [lensWidth]="250"
-                                  [lensHeight]="250">
-                                </lib-ngx-image-zoom>
-                              </div>
-                            </div>
-                            <span>ANPR Camera</span>
+                <div class="container-fluid">
+                  <div class="row gy-2 mb-4">
+                    <div class="col-sm-4">
+                      <div class="camera">
+                        <div class="img-wh">
+                          <div>
+                            <lib-ngx-image-zoom [thumbImage]="imageType(element, 'Anpr', 'Predication')?.imagePath"
+                              [magnification]="1" [enableScrollZoom]="true" [enableLens]="true" [lensWidth]="250"
+                              [lensHeight]="250">
+                            </lib-ngx-image-zoom>
                           </div>
                         </div>
-                        <div class="col-sm-4">
-                          <div class="camera">
-                            <img src="{{imageType(element, 'Front', 'Predication')?.imagePath}}" alt=""
-                              class="camera-height"
-                              (click)="openImage(element,imageType(element, 'Front', 'Predication')?.imagePath)">
-                            <span>Front Camera</span>
-                          </div>
-                        </div>
-                        <div class="col-sm-4">
-                          <div class="camera">
-                            <img src="{{imageType(element, 'Top', 'Predication')?.imagePath}}" alt=""
-                              (click)="openImage(element,imageType(element,'Top', 'Predication')?.imagePath)"
-                              class="camera-height">
-                            <span>Top Camera</span>
-                          </div>
-                        </div>
+                        <span>ANPR Camera</span>
                       </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="camera">
+                        <img src="{{imageType(element, 'Front', 'Predication')?.imagePath}}" alt=""
+                          class="camera-height"
+                          (click)="openImage(element,imageType(element, 'Front', 'Predication')?.imagePath)">
+                        <span>Front Camera</span>
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="camera">
+                        <img src="{{imageType(element, 'Top', 'Predication')?.imagePath}}" alt=""
+                          (click)="openImage(element,imageType(element,'Top', 'Predication')?.imagePath)"
+                          class="camera-height">
+                        <span>Top Camera</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
                     </mat-tab>
                     <mat-tab label="Raw">
                     <div class="container-fluid">
