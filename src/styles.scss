@@ -436,13 +436,18 @@ button.btn-modal-close {
 }
 
 .img-wh div{
-  // width: 350px !important;
-  height:  250px !important;
+  width: 350px !important;
+  max-width: 100%!important;
+  height:  230px !important;
 }
 
 .ngxImageZoomThumbnail{
-  height: 350px !important;
-    width: 250px !important;
+  height: 230px !important;
+    width: 350px !important;
+    max-width: 100%!important;
     object-fit: cover !important;
     object-position: center !important;
+}
+.imageViewer > .container {
+    max-width: 100%!important;
 }
