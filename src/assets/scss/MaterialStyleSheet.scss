@@ -131,23 +131,23 @@
 
 /* mat tab body scroll issue resolved*/
 .mat-mdc-tab-body-content {
-    padding: 10px 15px;
+    padding-top: 10px;
 }
 
 .mat-mdc-tab-labels {
     height: 45px !important;
     background: #eee !important;
-    border-radius: 30px;
+    border-radius: 5px;
 }
 
 .mdc-tab .mat-ripple {
-    border-radius: 30px !important;
+    border-radius: 5px !important;
 }
 
 .mdc-tab {
     padding-inline: 20px !important;
     margin: 5px 5px 0 5px !important;
-    border-radius: 30px !important;
+    border-radius: 5px !important;
     height: 34px !important;
 }
 
