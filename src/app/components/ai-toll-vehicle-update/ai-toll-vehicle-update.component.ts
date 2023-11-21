@@ -422,7 +422,7 @@ export class AiTollVehicleUpdateComponent {
     this.apiService.setHttp('GET', 'MP/monitoring/get-AICategoryReverificationDetails?FromDate=' + this.datePipe.transform(this.filterFrom.value.from, 'yyyy/MM/dd') + '&ToDate=' + this.datePipe.transform(this.filterFrom.value.to, 'yyyy/MM/dd'), false, false, false, 'MPDSSBaseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
-        if (res.statusCode == "200") {
+        if (res.statusCode == "200" && res.responseData.length) {
           this.downloadExcel(res.responseData);
         } else {
 
