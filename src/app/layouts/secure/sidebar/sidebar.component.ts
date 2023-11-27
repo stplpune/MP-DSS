@@ -80,7 +80,6 @@ export class SidebarComponent {
         "sortOrder": 14
       },
     ]
-
     let pageUrls = pageListData.filter((ele: any) => {
       if (ele.isSideBarMenu) {
         return ele;
