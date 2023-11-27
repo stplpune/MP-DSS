@@ -12,7 +12,7 @@ export class AuthGuard implements CanActivate {
 
   canActivate(){
     if(!this.webStorageService.checkUserIsLoggedIn()){
-      this.commonMethodService.routerLinkRedirect('/home');
+      this.commonMethodService.routerLinkRedirect('/login');
       return false;
     } else {
       return true;
