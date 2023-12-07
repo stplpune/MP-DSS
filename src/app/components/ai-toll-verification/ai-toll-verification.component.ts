@@ -162,7 +162,7 @@ export class AiTollVerificationComponent {
       next: (res: any) => {
         if (res.statusCode == "200") {
           this.topCategoryArray = res.responseData;
-          this.topCategoryArray.unshift({ id: 0, subCategory: 'Top Class Category' });
+          this.topCategoryArray.unshift({ id: '', subCategory: 'Top Class Category' });
 
         } else {
           this.topCategoryArray = [];

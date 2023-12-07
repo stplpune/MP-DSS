@@ -55,9 +55,8 @@
                                       <input matInput placeholder="Enter Captcha" maxlength="4"
                                           formControlName="captcha">
                                       <mat-error class="text-danger">
-                                          <span *ngIf="loginFC['captcha'].hasError('required')">Please Enter
-                                              Captcha</span>
-                                          <span></span>
+                                          <span *ngIf="loginFC['captcha'].hasError('required')">Please Enter  Captcha</span>
+                                          <span *ngIf="loginFC['captcha'].hasError('minlength')|| loginFC['captcha'].hasError('maxlength') ">Please Enter Valid Captcha</span>
                                       </mat-error>
                                   </mat-form-field>
                               </div>
