@@ -52,7 +52,7 @@
               </mat-select>
             </mat-form-field>
           </div>
-          <div class="col-sm-2">
+          <div class="col-sm">
             <mat-form-field appearance="outline" class="w-100">
               <mat-select formControlName="Laneid" placeholder="All Lane">
                 <mat-option value="0">All Lane</mat-option>
@@ -61,16 +61,16 @@
               </mat-select>
             </mat-form-field>
           </div>
-          <div class="col-sm-2">
+          <div class="col-sm">
             <mat-form-field appearance="outline" class="w-100">
               <input matInput formControlName="TextSearch" placeholder="Vehicle No." UpperCaseText
                 (keypress)="Validation.noSpaceAllow($event);Validation.alphaNumericWithSpaces($event)">
             </mat-form-field>
           </div>
-          <div class="col-md-auto">
+          <div class="col-sm-auto">
             <div class="d-flex align-items-center gap-1">
               <button mat-stroked-button color="primary" (click)="pageNumber =1 ; getData()">Search</button>
-              <button mat-icon-button class="btn btn-second" (click)="exportExcel()" *ngIf="iscompleted == 1" matTooltip="Excel">
+              <button mat-icon-button color="accent" (click)="exportExcel()" *ngIf="iscompleted == 1" matTooltip="Excel">
                 <mat-icon class="material-symbols-rounded">
                   description
               </mat-icon>
