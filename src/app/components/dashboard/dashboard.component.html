@@ -1,3 +1,76 @@
-<div class="dashboard-outer container-fluid">
- Dashboard Works...
+<div class="row pb-5 bg-main-gradient" style="margin-bottom: -50px;">
+<p class="text-white mt-3">AI Vehicle Monitoring Dashboard </p>
 </div>
+<div class="filter-header bg-white pb-0 shadow border-0">
+    <form>
+      <div class="row gx-3">
+        <!-- <div class="col-sm-3 mb-sm-3">
+          <mat-form-field appearance="outline" class="w-100">
+            <input matInput [matDatepicker]="picker" formControlName="from">
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-3 mb-sm-3">
+          <mat-form-field appearance="outline" class="w-100">
+            <input matInput [matDatepicker]="picker1"  formControlName="to">
+            <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+          </mat-form-field>
+        </div> -->
+        
+        <div class="col-sm-3 mb-sm-3">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-select formControlName="Status" placeholder="legal/llegal">
+              <mat-option value="all">All Status</mat-option>
+              <mat-option value="valid">Legal</mat-option>
+              <mat-option value="invalid">Illegal</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-3 mb-sm-3">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-select formControlName="" placeholder="Lane No.">
+              <mat-option value="all">Lane No.</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-3 mb-sm-3">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-select formControlName="" placeholder="Front Class">
+              <mat-option value="all">Front Class</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-3 mb-sm-3">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-select formControlName="" placeholder="Top Class">
+              <mat-option value="all">Top Class</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-3 mb-sm-3">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-select formControlName="" placeholder="Error">
+              <mat-option value="all">Error</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-md-auto">
+          <div class="d-flex align-items-center gap-1">
+            <button mat-stroked-button color="primary">Search</button>
+          </div>
+        </div>
+
+      </div>
+    </form>
+
+  </div>
+  <mat-card class="plain-card">
+    <mat-card-content>
+        card data
+      
+      
+    </mat-card-content>
+  </mat-card>
+  
