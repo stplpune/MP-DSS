@@ -1,0 +1,179 @@
+@use 'assets/styles/theme';
+@use '@angular/material' as mat;
+
+body {
+  margin: 0;
+  font-family: Poppins, "Poppins", sans-serif!important;
+  font-size: .9rem!important;
+}
+mat-card.plain-card {
+  background: #FFFFFF;
+  border-radius: 12px;
+  box-shadow: none;
+}
+// filter style
+.filter-header {
+  padding: 15px;
+  margin-bottom: 15px!important;
+  border-radius: 5px;
+}
+.my-google-map .mat-mdc-form-field-subscript-wrapper,
+.filter-header .mat-mdc-form-field-subscript-wrapper {
+  display: none;
+}
+.my-google-map .mdc-notched-outline__leading{
+  border-bottom-left-radius: 0!important;
+}
+.my-google-map .mdc-notched-outline__trailing{
+  border-bottom-right-radius: 0!important;
+}
+// table style
+// .table-content{
+//   height: 360px;
+//   min-height: calc(100vh - 280px);
+//   overflow: auto;
+// }
+
+// dialog style
+.mdc-dialog__title.modal-header::before{
+  display: none;
+}
+.mdc-dialog__title.modal-header{
+  padding: 10px 10px 10px 24px;
+}
+// mat-error style
+.mat-mdc-form-field-error span {
+  font-size: .75rem;
+}
+
+.snack-success .mdc-snackbar__surface {
+  background-color: #198754 !important;
+  color: #fff !important;
+}
+
+.snack-danger .mdc-snackbar__surface {
+  background-color: #DC3545 !important;
+  color: #fff !important;
+}
+
+.snack-warning .mdc-snackbar__surface {
+  background-color: #FFC107 !important;
+}
+
+.snack-warning .mat-mdc-snack-bar-container,
+.snack-warning .mdc-snackbar__label {
+  color: #000 !important;
+}
+
+.mdc-dialog__title.modal-header::before{
+    display: none;
+
+}
+.mdc-dialog__title.modal-header{
+    padding: 10px 24px;
+}
+
+// expandable table images style
+.camera-height,
+.img-wh div{
+  width: 350px !important;
+  max-width: 100%!important;
+  height:  236px !important;
+}
+.verification-box .mat-mdc-form-field-subscript-wrapper {
+  display: none!important;
+}
+img-comparison-slider img,
+.ngxImageZoomThumbnail{
+  height: 230px !important;
+    width: 350px !important;
+    max-width: 100%!important;
+    object-fit: cover !important;
+    object-position: center !important;
+}
+.imageViewer > .container {
+    max-width: 100%!important;
+}
+.dashboard-table tr.example-detail-row {
+  height: 0;
+}
+.dashboard-table tr.example-element-row:not(.example-expanded-row):active,
+.dashboard-table tr.example-element-row:not(.example-expanded-row).active,
+.dashboard-table tr.example-element-row:not(.example-expanded-row):hover {
+  background: #efefef;
+}
+
+.dashboard-table .example-element-row td {
+  border-bottom-width: 0;
+}
+.example-element-diagram {
+  min-width: 80px;
+  border: 2px solid black;
+  padding: 8px;
+  font-weight: lighter;
+  margin: 8px 0;
+  height: 104px;
+}
+
+.example-element-symbol {
+  font-weight: bold;
+  font-size: 40px;
+  line-height: normal;
+}
+
+.example-element-description {
+  padding: 16px;
+}
+
+.example-element-description-attribution {
+  opacity: 0.5;
+}
+
+.toll-plaza-card {
+  position: relative;
+  height: 120px;
+  max-height: 150px;
+  border-radius: 15px;
+  border: none;
+  box-shadow: rgb(0 0 0 / 5%) 0px 3px 8px;
+}
+
+.toll-plaza-card h4 {
+  color: #2656AA;
+  font-weight: 600;
+}
+
+.toll-plaza-card .cloud-img {
+  height: 70px;
+  background-repeat: no-repeat;
+  position: absolute;
+  right: -3px;
+  top: -3px;
+  border-radius: 0px 15px 0px 0px;
+}
+
+.camera{
+  position: relative;
+}
+.camera span{
+  position: absolute;
+  bottom: 0;
+  left: 5px;
+  background-color: black;
+  color: white;
+  padding: 7px;
+  font-size: 0.85rem;
+}
+.verification-box {
+  background-color: #F2FBFF;
+  padding: 15px;
+  // height: 370px;
+  // max-height: 450px;
+}
+.verification-box label{
+color: var(--main-color);
+font-weight: 600;
+}
+.verification-box p{
+color: var(--main-color);
+}
