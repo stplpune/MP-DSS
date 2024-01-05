@@ -1,6 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA, Component } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import ImageViewer from 'awesome-image-viewer';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -59,6 +59,7 @@ export class AiTollVerificationComponent {
 
   dataSource: any;
   displayedColumns = ['SrNo', 'VehicleNo', 'LegalIllegal', 'FrontClassName', 'TopClassName', 'LaneNo', 'expand'];
+  displayedColumnsAll = ['SrNo', 'VehicleNo', 'LegalIllegal', 'FrontClassName', 'TopClassName', 'LaneNo','States' ,'expand'];
   expandedElement: any | null;
   pageNumber = 1;
   totalRows: any;
@@ -72,7 +73,6 @@ export class AiTollVerificationComponent {
   ANPRRemarkArray: any = ["number mismatch (standard)", " number mismatch (not standard)", "number plate not visible", "software error", "ANPR image not found", "vehicle mismatch ", "other"]
   frontTopRemarkArray: any = ['software error', 'Vehicle mismatch', 'other'];
   front_cls_names = ['truck', 'mini_truck', 'container', 'hywa', 'tractor', 'car', 'bus', 'unclassified', 'other', 'not_found', 'image_not_found'];
-
   filterFrom!: FormGroup;
   updateFrom: any;
 
@@ -89,6 +89,7 @@ export class AiTollVerificationComponent {
     private dateAdapter: DateAdapter<Date>,
   ) {
     this.dateAdapter.setLocale('en-GB');
+
   }
 
   ngOnInit() {
@@ -99,8 +100,9 @@ export class AiTollVerificationComponent {
   }
 
   defaultFilterFrom() {
+    let date = new Date();
     this.filterFrom = this.fb.group({
-      from: [new Date()],
+      from: [new Date(date.setDate(date.getDate() - 7))],
       to: [new Date()],
       isCompleted: [''],
       AI_SubCategory: [''],
@@ -118,15 +120,15 @@ export class AiTollVerificationComponent {
       VehicleDetected: [''],
       vehicleNumberPlate: [''],
       vehicleNumberDetected: [''],
-      vehicleNumberInput: [''],
+      vehicleNumberInput: ['', [Validators.required]],
       vehicleNumberRemark: [''],
       frontViewVehicle: [''],
       vehicleFrontAnalysis: [''],
-      vehicleFrontAnalysisType: [''],
+      vehicleFrontAnalysisType: ['', [Validators.required]],
       vehicleFrontAnalysisRemark: [''],
       TopVehicleDetected: [''],
       TopAnalysis: [''],
-      TopAnalysissubCategoryType: [''],
+      TopAnalysissubCategoryType: ['', [Validators.required]],
       TopAnalysisRemark: [''],
       AI_Toll_VerificationRemark: [''],
       anprdllRemark: [''],
@@ -135,6 +137,7 @@ export class AiTollVerificationComponent {
     })
     this.updateFrom.controls['AI_Toll_VerificationRemark'].disable();
   }
+  get updateCtr() { return this.updateFrom.controls }
 
   bindDistrict(stateId: number) {
     this.apiService.setHttp('GET', 'MP/Master/GetAllDistricts?StateId=' + stateId, false, false, false, 'baseUrl');
@@ -163,7 +166,6 @@ export class AiTollVerificationComponent {
         if (res.statusCode == "200") {
           this.topCategoryArray = res.responseData;
           this.topCategoryArray.unshift({ id: '', subCategory: 'Top Class Category' });
-
         } else {
           this.topCategoryArray = [];
           this.errorService.handelError(res.statusCode);
@@ -180,8 +182,8 @@ export class AiTollVerificationComponent {
     this.spinner.show();
     let queryParam = '';
     let fromData = this.filterFrom.value;
-    console.log(this.topCategoryArray);
     this.getTotalCount();
+
     let topClass = fromData.AI_SubCategory == 0 ? '' : this.topCategoryArray.find((ele: any) => ele.id == fromData.AI_SubCategory).subCategory
     queryParam = '?from=' + this.datePipe.transform(fromData.from, 'dd/MM/yyyy')
     queryParam += '&to=' + this.datePipe.transform(fromData.to, 'dd/MM/yyyy') + '&Status=' + fromData.Status + '&pagesize=10&pageno=' + this.pageNumber + "&isCompleted=" + this.iscompleted
@@ -243,7 +245,6 @@ export class AiTollVerificationComponent {
 
   onClickFold(data: any, flag: any) {
     this.editObj = data;
-    console.log(flag);
     this.defaultFrom();
     this.updateFrom.patchValue({
       VehicleDetected: data.vehicleDetected == 'No' ? data.vehicleDetected : 'Yes',
@@ -264,9 +265,9 @@ export class AiTollVerificationComponent {
 
 
     if (flag == 'Progress') {
-      this.updateFrom.getRawValue().vehicleNumberDetected == 'Yes' ? this.updateFrom.get('vehicleNumberInput').disable() : '';
-      this.updateFrom.getRawValue().vehicleFrontAnalysis == 'Yes' ? this.updateFrom.get('vehicleFrontAnalysisType').disable() : '';
-      this.updateFrom.getRawValue().TopAnalysis == 'Yes' ? this.updateFrom.get('TopAnalysissubCategoryType').disable() : '';
+      this.updateFrom.getRawValue().vehicleNumberDetected == 'Yes' && this.commonService.checkEmptyData(data.raw_vehicleno) ? this.updateFrom.get('vehicleNumberInput').disable() : '';
+      this.updateFrom.getRawValue().vehicleFrontAnalysis == 'Yes' && this.commonService.checkEmptyData(data.front_class_name) ? this.updateFrom.get('vehicleFrontAnalysisType').disable() : '';
+      this.updateFrom.getRawValue().TopAnalysis == 'Yes' && this.commonService.checkEmptyData(data.top_class_name) ? this.updateFrom.get('TopAnalysissubCategoryType').disable() : '';
     } else {
       this.updateFrom.get('VehicleDetected').disable();
       this.updateFrom.get('vehicleNumberPlate').disable();
@@ -285,6 +286,12 @@ export class AiTollVerificationComponent {
   }
 
   saveUpdate() {
+    if (this.updateFrom.invalid) {
+      this.commonService.snackBar('Please Enter Mandatory Fields',1);
+      return
+    }
+
+
     let formData = this.updateFrom.getRawValue();
     let sendObj = {
       "logId": +this.editObj.logid,
@@ -370,11 +377,11 @@ export class AiTollVerificationComponent {
   checkVehicleNo(obj: any) {
     if (this.updateFrom.getRawValue().vehicleNumberDetected == 'No') {
       this.updateFrom.get('vehicleNumberInput').enable();
-      this.updateFrom.get('vehicleNumberDetected').disable();
+      // this.updateFrom.get('vehicleNumberDetected').disable();
     } else {
       this.updateFrom.controls['vehicleNumberInput'].setValue(obj?.vehicle_OriginalNo ? obj?.vehicle_OriginalNo : obj?.vehicleno);
       this.updateFrom.get('vehicleNumberInput').disable();
-      this.updateFrom.get('vehicleNumberDetected').enable();
+      // this.updateFrom.get('vehicleNumberDetected').enable();
     }
   }
 
@@ -392,11 +399,11 @@ export class AiTollVerificationComponent {
   checkFrontClass(obj: any) {
     if (this.updateFrom.getRawValue().vehicleFrontAnalysis == 'No') {
       this.updateFrom.get('vehicleFrontAnalysisType').enable();
-      this.updateFrom.get('vehicleFrontAnalysis').disable();
+      //this.updateFrom.get('vehicleFrontAnalysis').disable();
     } else {
       this.updateFrom.controls['vehicleFrontAnalysisType'].setValue(obj?.front_class_name);
       this.updateFrom.get('vehicleFrontAnalysisType').disable();
-      this.updateFrom.get('vehicleFrontAnalysis').enable();
+      //this.updateFrom.get('vehicleFrontAnalysis').enable();
     }
   }
 
@@ -411,11 +418,11 @@ export class AiTollVerificationComponent {
   checkTopClass(obj: any) {
     if (this.updateFrom.getRawValue().TopAnalysis == 'No') {
       this.updateFrom.get('TopAnalysissubCategoryType').enable();
-      this.updateFrom.get('TopAnalysis').disable();
+      //this.updateFrom.get('TopAnalysis').disable();
     } else {
       this.updateFrom.controls['TopAnalysissubCategoryType'].setValue(obj?.aiSubCategoryId);
       this.updateFrom.get('TopAnalysissubCategoryType').disable();
-      this.updateFrom.get('TopAnalysis').enable();
+      //this.updateFrom.get('TopAnalysis').enable();
     }
   }
 

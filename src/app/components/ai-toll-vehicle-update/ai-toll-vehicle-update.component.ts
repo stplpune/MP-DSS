@@ -100,8 +100,9 @@ export class AiTollVehicleUpdateComponent {
   }
 
   defaultFilterFrom() {
+    let date = new Date();
     this.filterFrom = this.fb.group({
-      from: [new Date()],
+      from: [new Date(date.setDate(date.getDate() - 7))],
       to: [new Date()],
       isCompleted: [''],
       AI_SubCategory: [''],

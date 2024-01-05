@@ -268,12 +268,15 @@
 
                             </div>
                             <div class="mb-2">
-                              <label for="">Vehicle No.</label>
+                              <label for="">Vehicle No.<span class="text-danger">*</span></label>
                               <mat-form-field appearance="outline" class="w-100">
                                 <input matInput placeholder="Vehicle No." formControlName="vehicleNumberInput"
                                   UpperCaseText
                                   (keypress)="Validation.noSpaceAllow($event);Validation.alphaNumericWithSpaces($event);checkRawNo(element)"
                                   maxlength="10">
+                                  <mat-error>
+                                    <span *ngIf="updateCtr['vehicleNumberInput'].hasError('required')">Please Enter Vehice No.</span>
+                                </mat-error>
                               </mat-form-field>
                             </div>
                             <div class="mb-0">
@@ -311,13 +314,16 @@
                               </mat-radio-group>
                             </div>
                             <div class="mb-2 mt-4 pt-2">
-                              <label for="">Vehicle Type</label>
+                              <label for="">Vehicle Type<span class="text-danger">*</span></label>
                               <mat-form-field appearance="outline" class="w-100">
                                 <mat-select formControlName="vehicleFrontAnalysisType" placeholder="Select Vehicle Type"
                                   (selectionChange)="checkRawFrontClass(element)">
                                   <mat-option value="">All Front Class</mat-option>
                                   <mat-option *ngFor="let item of front_cls_names" [value]="item">{{item}}</mat-option>
                                 </mat-select>
+                                <mat-error>
+                                  <span >Please Select Front Class</span>
+                              </mat-error>
                               </mat-form-field>
                             </div>
                             <div class="mb-0">
@@ -355,13 +361,16 @@
 
                             </div>
                             <div class="mb-2 mt-4 pt-2">
-                              <label for="">Mining Type</label>
+                              <label for="">Mining Type <span class="text-danger">*</span></label>
                               <mat-form-field appearance="outline" class="w-100">
                                 <mat-select formControlName="TopAnalysissubCategoryType"
                                   placeholder="Select Mining Type" (selectionChange)="checkRawTopClass(element)">
                                   <mat-option *ngFor="let x of topCategoryArray"
                                     [value]="x.subCategory">{{x.subCategory}}</mat-option>
                                 </mat-select>
+                                <mat-error>
+                                  <span >Please Select Mining Type</span>
+                              </mat-error>
                               </mat-form-field>
                             </div>
                             <div class="mb-0">
@@ -388,8 +397,7 @@
                           </mat-form-field>
                         </div>
                         <div class="col-lg-auto">
-                          <button mat-raised-button color="accent" (click)="saveUpdate()">Submit</button>
-
+                          <button mat-raised-button color="accent" type="submit" (click)="saveUpdate()">Submit</button>
                         </div>
                       </div>
                     </form>
@@ -678,7 +686,543 @@
           </div>
         </mat-tab>
         <mat-tab label="IN CONCLUSION">
-          <div class="alert alert-danger text-center m-2 mt-2 p-2">No data found</div>
+          <div class="table-responsive table-content scrollbar">
+            <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="dashboard-table">
+              <ng-container matColumnDef="SrNo">
+                <th mat-header-cell *matHeaderCellDef> Sr.No. </th>
+                <td mat-cell *matCellDef="let element; let i=index" class="mxw-80"> {{element.srNo}}</td>
+              </ng-container>
+              <ng-container matColumnDef="VehicleNo">
+                <th mat-header-cell *matHeaderCellDef>Vehicle No.</th>
+                <td mat-cell *matCellDef="let element ">
+                  <div class="d-flex">
+                    <div class="text-uppercase" style="min-width: 125px;">
+                      <p class="mb-0 fw-600"><span class="fw-bold">AI - </span>{{element.raw_vehicleno ?
+                        element.raw_vehicleno : element.vehicleNumber }}</p>
+                      <p class="mb-0 fw-600"><span class="fw-bold">GT - </span>{{element.vehicleNumber  ||  "-"}}</p><span
+                        class="small"> {{element.date | date:"dd/MM/yyyy HH:mm"}}</span>
+                    </div>
+                    <img src="{{imageType(element, 'Number Plate', 'Nothing')?.imagePath}}" height="60"
+                      class="m-2  NumberPLate" style="border: 2px solid #5a5a5a;">
+                  </div>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="LegalIllegal">
+                <th mat-header-cell *matHeaderCellDef>Legal/Illegal</th>
+                <td mat-cell *matCellDef="let element ">{{element.leagalIlligal  ||  "-"}} </td>
+              </ng-container>
+              <ng-container matColumnDef="FrontClassName">
+                <th mat-header-cell *matHeaderCellDef>Front Class Name</th>
+                <td mat-cell *matCellDef="let element ">
+                  <!-- {{element.aI_VehicleType}}  -->
+                  <div class="d-flex flex-column justify-content-start">
+                    <p class="mb-0"><span class="fw-bold">AI-</span><span>{{element.front_class_name  ||  "-"}}</span></p>
+                    <p class="mb-0"><span class="fw-bold">GT-</span><span>{{element.aI_VehicleType  ||  "-"}}</span></p>
+                  </div>
+                </td>
+
+              </ng-container>
+              <ng-container matColumnDef="TopClassName">
+                <th mat-header-cell *matHeaderCellDef>Top Class Name</th>
+                <td mat-cell *matCellDef="let element ">
+                  <div class="d-flex flex-column justify-content-start">
+                    <p class="mb-0"><span class="fw-bold">AI-</span><span>{{element.top_class_name  ||  "-"}}</span></p>
+                    <p class="mb-0"><span class="fw-bold">GT-</span><span>{{element.aI_SubCategory  ||  "-"}}</span></p>
+                  </div>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="LaneNo">
+                <th mat-header-cell *matHeaderCellDef>Lane No.</th>
+                <td mat-cell *matCellDef="let element ">Lane- {{element.laneid  ||  "-"}}</td>
+              </ng-container>
+              <ng-container matColumnDef="expand">
+                <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
+                <td mat-cell *matCellDef="let element">
+                  <button mat-icon-button aria-label="expand row"
+                    (click)="(expandedElement = expandedElement === element ? null : element); $event.stopPropagation() ;onClickFold(element,'completed')">
+                    <mat-icon class="material-symbols-rounded"
+                      *ngIf="expandedElement !== element">keyboard_arrow_down</mat-icon>
+                    <mat-icon class="material-symbols-rounded"
+                      *ngIf="expandedElement === element">keyboard_arrow_up</mat-icon>
+                  </button>
+                </td>
+              </ng-container>
+
+              <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+              <ng-container matColumnDef="expandedDetail">
+                <td mat-cell *matCellDef="let element" [attr.colspan]="7">
+                  <div class="example-element-detail"
+                    [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                  <div class="p-3 mb-2 bg-light">
+                    <div class="row gy-2 ">
+                      <div class="col-sm-4">
+                        <div class="camera">
+                          <div class="img-wh">
+                            <div>
+                              <lib-ngx-image-zoom
+                                [thumbImage]="imageType(element, 'Anpr', 'Predication')?.imagePath"
+                                [magnification]="1" [enableScrollZoom]="true" [enableLens]="true" [lensWidth]="250"
+                                [lensHeight]="250">
+                              </lib-ngx-image-zoom>
+                            </div>
+                          </div>
+                          <span>ANPR Camera</span>
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="camera">
+                          <img-comparison-slider >
+                            <img slot="first" src="{{imageType(element, 'Anpr', 'Predication')?.imagePath}}" />
+                            <img slot="second" src="{{imageType(element, 'Anpr', 'Raw')?.imagePath}}"  />
+                          </img-comparison-slider>
+                          <span>Front Camera</span>
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="camera">
+                            <img-comparison-slider >
+                            <img slot="first" src="{{imageType(element, 'Top', 'Predication')?.imagePath}}" />
+                            <img slot="second" src="{{imageType(element, 'Top', 'Raw')?.imagePath}}"  />
+                          </img-comparison-slider>
+                          <span>Top Camera</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="text-end mt-2">
+                      <button mat-stroked-button color="accent" class="me-md-3" (click)="openImage(element)">View All Images</button>
+                    </div>
+                  </div>
+
+
+
+                    <form [formGroup]="updateFrom">
+                      <div class="row gx-2 mb-3">
+                        <div class="col-sm-4">
+                          <div class="card verification-box small">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                              <p class="mb-0">Vechicle Detected (Green Box) 22</p>
+                              <mat-radio-group aria-label="Select an option" color="primary" class="d-flex gap-2 text-nowrap"
+                                formControlName="VehicleDetected">
+                                <mat-radio-button value="Yes">Correct</mat-radio-button>
+                                <mat-radio-button value="No">Incorrect</mat-radio-button>
+                              </mat-radio-group>
+
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                              <p class="mb-0">Number Plate Detected  (Red Box)</p>
+                              <mat-radio-group aria-label="Select an option" color="primary" class="d-flex gap-2 text-nowrap"
+                                formControlName="vehicleNumberPlate">
+                                <mat-radio-button value="Yes" >Correct</mat-radio-button>
+                                <mat-radio-button value="No" >Incorrect</mat-radio-button>
+                              </mat-radio-group>
+
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                              <p class="mb-0">Vehicle Number </p>
+                              <mat-radio-group aria-label="Select an option " color="primary" class="d-flex gap-2 text-nowrap"
+                                formControlName="vehicleNumberDetected" (change)="checkVehicleNo(element)">
+                                <mat-radio-button value="Yes">Correct</mat-radio-button>
+                                <mat-radio-button value="No">Incorrect</mat-radio-button>
+                              </mat-radio-group>
+
+                            </div>
+                            <div class="mb-2">
+                              <label for="">Vehicle No.</label>
+                              <mat-form-field appearance="outline" class="w-100">
+                                <input matInput placeholder="Vehicle No." formControlName="vehicleNumberInput"
+                                  UpperCaseText
+                                  (keypress)="Validation.noSpaceAllow($event);Validation.alphaNumericWithSpaces($event);checkRawNo(element)"
+                                  maxlength="10">
+                              </mat-form-field>
+                            </div>
+                            <div class="mb-0">
+                              <label>Remark</label>
+                              <mat-form-field appearance="outline" class="w-100">
+                                <textarea matInput name="questionText" cols="35" rows="2" placeholder="Remark "
+                                  alphaNumericWithSpecialchar formControlName="vehicleNumberRemark"></textarea>
+                              </mat-form-field>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-sm-4">
+                          <div class="card verification-box small">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                              <p class="mb-0">Front Vehicle Detected (Box)</p>
+                              <mat-radio-group aria-label="Select an option " color="primary" class="d-flex gap-2 text-nowrap"
+                                formControlName="frontViewVehicle">
+                                <mat-radio-button value="Yes">Correct</mat-radio-button>
+                                <mat-radio-button value="No">Incorrect</mat-radio-button>
+                              </mat-radio-group>
+
+                            </div>
+                            <div class="d-flex mb-2 justify-content-between align-items-center">
+                              <p class="mb-0">Predicted Front Analysis</p>
+                              <mat-radio-group aria-label="Select an option " color="primary" class="d-flex gap-2 text-nowrap"
+                                formControlName="vehicleFrontAnalysis" (change)="checkFrontClass(element)">
+                                <mat-radio-button value="Yes">Correct</mat-radio-button>
+                                <mat-radio-button value="No">Incorrect</mat-radio-button>
+                              </mat-radio-group>
+                            </div>
+                            <div class="mb-2 mt-4 pt-3">
+                              <label for="">Vehicle Type</label>
+                              <mat-form-field appearance="outline" class="w-100">
+                                <mat-select formControlName="vehicleFrontAnalysisType" placeholder="Select Vehicle Type"
+                                  (selectionChange)="checkRawFrontClass(element)">
+                                  <mat-option value="">All Front Class</mat-option>
+                                  <mat-option *ngFor="let item of front_cls_names" [value]="item">{{item}}</mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                            </div>
+                            <div class="mb-0">
+                              <label>Remark</label>
+                              <mat-form-field appearance="outline" class="w-100">
+                                <textarea matInput name="questionText" cols="35" rows="2" placeholder="Remark "
+                                  formControlName="vehicleFrontAnalysisRemark"></textarea>
+                              </mat-form-field>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-sm-4">
+                          <div class="card verification-box small">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                              <p class="mb-0">Top of Vehicle Detected (Box)</p>
+                              <mat-radio-group aria-label="Select an option " color="primary" class="d-flex gap-2 text-nowrap"
+                                formControlName="TopVehicleDetected">
+                                <mat-radio-button value="Yes">Correct</mat-radio-button>
+                                <mat-radio-button value="No">Incorrect</mat-radio-button>
+                              </mat-radio-group>
+                            </div>
+                            <div class="d-flex mb-2 justify-content-between align-items-center">
+                              <p class="mb-0">Predicted Top Analysis</p>
+                              <mat-radio-group aria-label="Select an option " color="primary" class="d-flex gap-2 text-nowrap"
+                                (change)="checkTopClass(element)" formControlName="TopAnalysis">
+                                <mat-radio-button value="Yes">Correct</mat-radio-button>
+                                <mat-radio-button value="No">Incorrect</mat-radio-button>
+                              </mat-radio-group>
+
+                            </div>
+                            <div class="mb-2 mt-4 pt-3">
+                              <label for="">Mining Type</label>
+                              <mat-form-field appearance="outline" class="w-100">
+                                <mat-select formControlName="TopAnalysissubCategoryType"
+                                  placeholder="Select Mining Type" (selectionChange)="checkRawTopClass(element)">
+                                  <mat-option *ngFor="let x of topCategoryArray"
+                                    [value]="x.subCategory">{{x.subCategory}}</mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                            </div>
+                            <div class="mb-0">
+                              <label>Remark</label>
+
+                              <mat-form-field appearance="outline" class="w-100">
+                                <textarea matInput name="questionText" cols="35" rows="2" placeholder="Remark "
+                                  alphaNumericWithSpecialchar formControlName="TopAnalysisRemark"></textarea>
+                              </mat-form-field>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-lg">
+                          <mat-form-field appearance="outline" class="w-100">
+                            <textarea matInput cols="35" rows="2" placeholder="Remark "
+                              formControlName="AI_Toll_VerificationRemark"></textarea>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </td>
+              </ng-container>
+              <tr class="mat-row p-2 w-100" *matNoDataRow col>
+                <td colspan="12" class="p-2"> <div  class="alert alert-danger text-center p-2 mb-0">  No data found</div></td>
+              </tr>
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let element; columns: displayedColumns;" class="example-element-row"></tr>
+              <!-- [class.example-expanded-row]="expandedElement === element"   (click)="expandedElement = expandedElement === element ? null : element"-->
+
+              <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+            </table>
+            <ng-container *ngIf="totalRows>10">
+              <mat-paginator [pageSizeOptions]="[10]" [length]="totalRows" hidePageSize="true" showFirstLastButtons
+                (page)="pageChanged($event)">
+              </mat-paginator>
+            </ng-container>
+          </div>
+        </mat-tab>
+        <mat-tab label="All">
+          <div class="table-responsive table-content scrollbar">
+            <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="dashboard-table">
+              <ng-container matColumnDef="SrNo">
+                <th mat-header-cell *matHeaderCellDef> Sr.No. </th>
+                <td mat-cell *matCellDef="let element; let i=index" class="mxw-80"> {{element.srNo}}</td>
+              </ng-container>
+              <ng-container matColumnDef="VehicleNo">
+                <th mat-header-cell *matHeaderCellDef>Vehicle No.</th>
+                <td mat-cell *matCellDef="let element ">
+                  <div class="d-flex">
+                    <div class="text-uppercase" style="min-width: 125px;">
+                      <p class="mb-0 fw-600"><span class="fw-bold">AI - </span>{{element.raw_vehicleno ?
+                        element.raw_vehicleno : element.vehicleNumber }}</p>
+                      <p class="mb-0 fw-600"><span class="fw-bold">GT - </span>{{element.vehicleNumber  ||  "-"}}</p><span
+                        class="small"> {{element.date | date:"dd/MM/yyyy HH:mm"}}</span>
+                    </div>
+                    <img src="{{imageType(element, 'Number Plate', 'Nothing')?.imagePath}}" height="60"
+                      class="m-2  NumberPLate" style="border: 2px solid #5a5a5a;">
+                  </div>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="LegalIllegal">
+                <th mat-header-cell *matHeaderCellDef>Legal/Illegal</th>
+                <td mat-cell *matCellDef="let element ">{{element.leagalIlligal  ||  "-"}} </td>
+              </ng-container>
+              <ng-container matColumnDef="FrontClassName">
+                <th mat-header-cell *matHeaderCellDef>Front Class Name</th>
+                <td mat-cell *matCellDef="let element ">
+                  <!-- {{element.aI_VehicleType}}  -->
+                  <div class="d-flex flex-column justify-content-start">
+                    <p class="mb-0"><span class="fw-bold">AI-</span><span>{{element.front_class_name  ||  "-"}}</span></p>
+                    <p class="mb-0"><span class="fw-bold">GT-</span><span>{{element.aI_VehicleType  ||  "-"}}</span></p>
+                  </div>
+                </td>
+
+              </ng-container>
+              <ng-container matColumnDef="TopClassName">
+                <th mat-header-cell *matHeaderCellDef>Top Class Name</th>
+                <td mat-cell *matCellDef="let element ">
+                  <div class="d-flex flex-column justify-content-start">
+                    <p class="mb-0"><span class="fw-bold">AI-</span><span>{{element.top_class_name  ||  "-"}}</span></p>
+                    <p class="mb-0"><span class="fw-bold">GT-</span><span>{{element.aI_SubCategory  ||  "-"}}</span></p>
+                  </div>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="LaneNo">
+                <th mat-header-cell *matHeaderCellDef>Lane No.</th>
+                <td mat-cell *matCellDef="let element ">Lane- {{element.laneid  ||  "-"}}</td>
+              </ng-container>
+              <ng-container matColumnDef="States">
+                <th mat-header-cell *matHeaderCellDef>States</th>
+                <td mat-cell *matCellDef="let element ">
+                  <div class="d-flex align-items-center">
+                    <span class="rounded-circle bg-opacity-75 p-2 me-2" [ngClass]="element.isCompleted == 0 ?  'bg-danger':'bg-success' "></span>
+                    <span>Completed</span>
+                  </div>
+                  <div class="d-flex align-items-center">
+                    <span class="rounded-circle  bg-opacity-75 p-2 me-2" [ngClass]="element.isReVerified ?  'bg-success':'bg-danger' "></span>
+                    <span>Re-verified</span>
+                  </div>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="expand">
+                <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
+                <td mat-cell *matCellDef="let element">
+                  <button mat-icon-button aria-label="expand row"
+                    (click)="(expandedElement = expandedElement === element ? null : element); $event.stopPropagation() ;onClickFold(element,'completed')">
+                    <mat-icon class="material-symbols-rounded"
+                      *ngIf="expandedElement !== element">keyboard_arrow_down</mat-icon>
+                    <mat-icon class="material-symbols-rounded"
+                      *ngIf="expandedElement === element">keyboard_arrow_up</mat-icon>
+                  </button>
+                </td>
+              </ng-container>
+
+              <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+              <ng-container matColumnDef="expandedDetail">
+                <td mat-cell *matCellDef="let element" [attr.colspan]="8">
+                  <div class="example-element-detail"
+                    [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                  <div class="p-3 mb-2 bg-light">
+                    <div class="row gy-2 ">
+                      <div class="col-sm-4">
+                        <div class="camera">
+                          <div class="img-wh">
+                            <div>
+                              <lib-ngx-image-zoom
+                                [thumbImage]="imageType(element, 'Anpr', 'Predication')?.imagePath"
+                                [magnification]="1" [enableScrollZoom]="true" [enableLens]="true" [lensWidth]="250"
+                                [lensHeight]="250">
+                              </lib-ngx-image-zoom>
+                            </div>
+                          </div>
+                          <span>ANPR Camera</span>
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="camera">
+                          <img-comparison-slider >
+                            <img slot="first" src="{{imageType(element, 'Anpr', 'Predication')?.imagePath}}" />
+                            <img slot="second" src="{{imageType(element, 'Anpr', 'Raw')?.imagePath}}"  />
+                          </img-comparison-slider>
+                          <span>Front Camera</span>
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="camera">
+                            <img-comparison-slider >
+                            <img slot="first" src="{{imageType(element, 'Top', 'Predication')?.imagePath}}" />
+                            <img slot="second" src="{{imageType(element, 'Top', 'Raw')?.imagePath}}"  />
+                          </img-comparison-slider>
+                          <span>Top Camera</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="text-end mt-2">
+                      <button mat-stroked-button color="accent" class="me-md-3" (click)="openImage(element)">View All Images</button>
+                    </div>
+                  </div>
+                    <form [formGroup]="updateFrom">
+                      <div class="row gx-2 mb-3">
+                        <div class="col-sm-4">
+                          <div class="card verification-box small">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                              <p class="mb-0">Vechicle Detected (Green Box) 22</p>
+                              <mat-radio-group aria-label="Select an option" color="primary" class="d-flex gap-2 text-nowrap"
+                                formControlName="VehicleDetected">
+                                <mat-radio-button value="Yes">Correct</mat-radio-button>
+                                <mat-radio-button value="No">Incorrect</mat-radio-button>
+                              </mat-radio-group>
+
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                              <p class="mb-0">Number Plate Detected  (Red Box)</p>
+                              <mat-radio-group aria-label="Select an option" color="primary" class="d-flex gap-2 text-nowrap"
+                                formControlName="vehicleNumberPlate">
+                                <mat-radio-button value="Yes" >Correct</mat-radio-button>
+                                <mat-radio-button value="No" >Incorrect</mat-radio-button>
+                              </mat-radio-group>
+
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                              <p class="mb-0">Vehicle Number </p>
+                              <mat-radio-group aria-label="Select an option " color="primary" class="d-flex gap-2 text-nowrap"
+                                formControlName="vehicleNumberDetected">
+                                <mat-radio-button value="Yes">Correct</mat-radio-button>
+                                <mat-radio-button value="No">Incorrect</mat-radio-button>
+                              </mat-radio-group>
+
+                            </div>
+                            <div class="mb-2">
+                              <label for="">Vehicle No.</label>
+                              <mat-form-field appearance="outline" class="w-100">
+                                <input matInput placeholder="Vehicle No." formControlName="vehicleNumberInput"
+                                  UpperCaseText
+                                  (keypress)="Validation.noSpaceAllow($event);Validation.alphaNumericWithSpaces($event);"
+                                  maxlength="10">
+                              </mat-form-field>
+                            </div>
+                            <div class="mb-0">
+                              <label>Remark</label>
+                              <mat-form-field appearance="outline" class="w-100">
+                                <textarea matInput name="questionText" cols="35" rows="2" placeholder="Remark "
+                                  alphaNumericWithSpecialchar formControlName="vehicleNumberRemark"></textarea>
+                              </mat-form-field>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-sm-4">
+                          <div class="card verification-box small">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                              <p class="mb-0">Front Vehicle Detected (Box)</p>
+                              <mat-radio-group aria-label="Select an option " color="primary" class="d-flex gap-2 text-nowrap"
+                                formControlName="frontViewVehicle">
+                                <mat-radio-button value="Yes">Correct</mat-radio-button>
+                                <mat-radio-button value="No">Incorrect</mat-radio-button>
+                              </mat-radio-group>
+
+                            </div>
+                            <div class="d-flex mb-2 justify-content-between align-items-center">
+                              <p class="mb-0">Predicted Front Analysis</p>
+                              <mat-radio-group aria-label="Select an option " color="primary" class="d-flex gap-2 text-nowrap"
+                                formControlName="vehicleFrontAnalysis" >
+                                <mat-radio-button value="Yes">Correct</mat-radio-button>
+                                <mat-radio-button value="No">Incorrect</mat-radio-button>
+                              </mat-radio-group>
+                            </div>
+                            <div class="mb-2 mt-4 pt-3">
+                              <label for="">Vehicle Type</label>
+                              <mat-form-field appearance="outline" class="w-100">
+                                <mat-select formControlName="vehicleFrontAnalysisType" placeholder="Select Vehicle Type">
+                                  <mat-option value="">All Front Class</mat-option>
+                                  <mat-option *ngFor="let item of front_cls_names" [value]="item">{{item}}</mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                            </div>
+                            <div class="mb-0">
+                              <label>Remark</label>
+                              <mat-form-field appearance="outline" class="w-100">
+                                <textarea matInput name="questionText" cols="35" rows="2" placeholder="Remark "
+                                  formControlName="vehicleFrontAnalysisRemark"></textarea>
+                              </mat-form-field>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-sm-4">
+                          <div class="card verification-box small">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                              <p class="mb-0">Top of Vehicle Detected (Box)</p>
+                              <mat-radio-group aria-label="Select an option " color="primary" class="d-flex gap-2 text-nowrap"
+                                formControlName="TopVehicleDetected">
+                                <mat-radio-button value="Yes">Correct</mat-radio-button>
+                                <mat-radio-button value="No">Incorrect</mat-radio-button>
+                              </mat-radio-group>
+                            </div>
+                            <div class="d-flex mb-2 justify-content-between align-items-center">
+                              <p class="mb-0">Predicted Top Analysis</p>
+                              <mat-radio-group aria-label="Select an option " color="primary" class="d-flex gap-2 text-nowrap"
+                                formControlName="TopAnalysis">
+                                <mat-radio-button value="Yes">Correct</mat-radio-button>
+                                <mat-radio-button value="No">Incorrect</mat-radio-button>
+                              </mat-radio-group>
+
+                            </div>
+                            <div class="mb-2 mt-4 pt-3">
+                              <label for="">Mining Type</label>
+                              <mat-form-field appearance="outline" class="w-100">
+                                <mat-select formControlName="TopAnalysissubCategoryType"
+                                  placeholder="Select Mining Type">
+                                  <mat-option *ngFor="let x of topCategoryArray"
+                                    [value]="x.subCategory">{{x.subCategory}}</mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                            </div>
+                            <div class="mb-0">
+                              <label>Remark</label>
+
+                              <mat-form-field appearance="outline" class="w-100">
+                                <textarea matInput name="questionText" cols="35" rows="2" placeholder="Remark "
+                                  alphaNumericWithSpecialchar formControlName="TopAnalysisRemark"></textarea>
+                              </mat-form-field>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-lg">
+                          <mat-form-field appearance="outline" class="w-100">
+                            <textarea matInput cols="35" rows="2" placeholder="Remark "
+                              formControlName="AI_Toll_VerificationRemark"></textarea>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </td>
+              </ng-container>
+              <tr class="mat-row p-2 w-100" *matNoDataRow col>
+                <td colspan="12" class="p-2"> <div  class="alert alert-danger text-center p-2 mb-0">  No data found</div></td>
+              </tr>
+              <tr mat-header-row *matHeaderRowDef="displayedColumnsAll"></tr>
+              <tr mat-row *matRowDef="let element; columns: displayedColumnsAll;" class="example-element-row"></tr>
+              <!-- [class.example-expanded-row]="expandedElement === element"   (click)="expandedElement = expandedElement === element ? null : element"-->
+
+              <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+            </table>
+            <ng-container *ngIf="totalRows>10">
+              <mat-paginator [pageSizeOptions]="[10]" [length]="totalRows" hidePageSize="true" showFirstLastButtons
+                (page)="pageChanged($event)">
+              </mat-paginator>
+            </ng-container>
+          </div>
         </mat-tab>
       </mat-tab-group>
     </div>
