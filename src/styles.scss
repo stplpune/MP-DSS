@@ -178,3 +178,11 @@ font-weight: 600;
 .verification-box p{
 color: var(--main-color);
 }
+
+.custom-animated-handle {
+  transition: transform 0.2s;
+}
+
+.slider-with-animated-handle:hover .custom-animated-handle {
+  transform: scale(1.2);
+}

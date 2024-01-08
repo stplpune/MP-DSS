@@ -100,7 +100,7 @@
                       <p class="mb-0 fw-600"><span class="fw-bold">AI - </span>{{element.raw_vehicleno ?
                         element.raw_vehicleno : element.vehicleNumber }}</p>
                       <p class="mb-0 fw-600"><span class="fw-bold">GT - </span>{{element.vehicleNumber}}</p><span
-                        class="small"> {{element.date | date:"dd/MM/yyyy HH:mm"}}</span>
+                        class="small"> {{element.date | date:"dd/MM/yyyy HH:mm a"}}</span>
                     </div>
                     <img src="{{imageType(element, 'Number Plate', 'Nothing')?.imagePath}}" height="60"
                       class="m-2  NumberPLate" style="border: 2px solid #5a5a5a;">
@@ -171,18 +171,24 @@
                       </div>
                       <div class="col-sm-4">
                         <div class="camera">
-                          <img-comparison-slider >
+                          <img-comparison-slider class="slider-with-animated-handle">
                             <img slot="first" src="{{imageType(element, 'Anpr', 'Predication')?.imagePath}}" />
                             <img slot="second" src="{{imageType(element, 'Anpr', 'Raw')?.imagePath}}"  />
+                            <svg slot="handle" class="custom-animated-handle" xmlns="http://www.w3.org/2000/svg" width="100" viewBox="-8 -3 16 6">
+                              <path stroke="#fff" d="M -5 -2 L -7 0 L -5 2 M -5 -2 L -5 2 M 5 -2 L 7 0 L 5 2 M 5 -2 L 5 2" stroke-width="1" fill="#fff" vector-effect="non-scaling-stroke"></path>
+                            </svg>
                           </img-comparison-slider>
                           <span>Front Camera</span>
                         </div>
                       </div>
                       <div class="col-sm-4">
                         <div class="camera">
-                            <img-comparison-slider >
+                            <img-comparison-slider class="slider-with-animated-handle" >
                             <img slot="first" src="{{imageType(element, 'Top', 'Predication')?.imagePath}}" />
                             <img slot="second" src="{{imageType(element, 'Top', 'Raw')?.imagePath}}"  />
+                            <svg slot="handle" class="custom-animated-handle" xmlns="http://www.w3.org/2000/svg" width="100" viewBox="-8 -3 16 6">
+                              <path stroke="#fff" d="M -5 -2 L -7 0 L -5 2 M -5 -2 L -5 2 M 5 -2 L 7 0 L 5 2 M 5 -2 L 5 2" stroke-width="1" fill="#fff" vector-effect="non-scaling-stroke"></path>
+                            </svg>
                           </img-comparison-slider>
                           <span>Top Camera</span>
                         </div>
@@ -366,7 +372,7 @@
                       <p class="mb-0 fw-600"><span class="fw-bold">AI - </span>{{element.raw_vehicleno ?
                         element.raw_vehicleno : element.vehicleNumber }}</p>
                       <p class="mb-0 fw-600"><span class="fw-bold">GT - </span>{{element.vehicleNumber  ||  "-"}}</p><span
-                        class="small"> {{element.date | date:"dd/MM/yyyy HH:mm"}}</span>
+                        class="small"> {{element.date | date:"dd/MM/yyyy HH:mm a"}}</span>
                     </div>
                     <img src="{{imageType(element, 'Number Plate', 'Nothing')?.imagePath}}" height="60"
                       class="m-2  NumberPLate" style="border: 2px solid #5a5a5a;">
@@ -437,18 +443,24 @@
                       </div>
                       <div class="col-sm-4">
                         <div class="camera">
-                          <img-comparison-slider >
+                          <img-comparison-slider class="slider-with-animated-handle" >
                             <img slot="first" src="{{imageType(element, 'Anpr', 'Predication')?.imagePath}}" />
                             <img slot="second" src="{{imageType(element, 'Anpr', 'Raw')?.imagePath}}"  />
+                            <svg slot="handle" class="custom-animated-handle" xmlns="http://www.w3.org/2000/svg" width="100" viewBox="-8 -3 16 6">
+                              <path stroke="#fff" d="M -5 -2 L -7 0 L -5 2 M -5 -2 L -5 2 M 5 -2 L 7 0 L 5 2 M 5 -2 L 5 2" stroke-width="1" fill="#fff" vector-effect="non-scaling-stroke"></path>
+                            </svg>
                           </img-comparison-slider>
                           <span>Front Camera</span>
                         </div>
                       </div>
                       <div class="col-sm-4">
                         <div class="camera">
-                            <img-comparison-slider >
+                            <img-comparison-slider class="slider-with-animated-handle">
                             <img slot="first" src="{{imageType(element, 'Top', 'Predication')?.imagePath}}" />
                             <img slot="second" src="{{imageType(element, 'Top', 'Raw')?.imagePath}}"  />
+                            <svg slot="handle" class="custom-animated-handle" xmlns="http://www.w3.org/2000/svg" width="100" viewBox="-8 -3 16 6">
+                              <path stroke="#fff" d="M -5 -2 L -7 0 L -5 2 M -5 -2 L -5 2 M 5 -2 L 7 0 L 5 2 M 5 -2 L 5 2" stroke-width="1" fill="#fff" vector-effect="non-scaling-stroke"></path>
+                            </svg>
                           </img-comparison-slider>
                           <span>Top Camera</span>
                         </div>

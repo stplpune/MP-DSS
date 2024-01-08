@@ -248,7 +248,7 @@ export class AiTollVerificationComponent {
     this.defaultFrom();
     this.updateFrom.patchValue({
       VehicleDetected: data.vehicleDetected == 'No' ? data.vehicleDetected : 'Yes',
-      vehicleNumberPlate: data.numberPlateDetected || 'Yes',
+      vehicleNumberPlate: data.numberPlateDetected == 'No'?data.numberPlateDetected : 'Yes',
       vehicleNumberDetected: data.vehicleNo_Available == 'No' ? data.vehicleNo_Available : 'Yes',
       vehicleNumberInput: flag == 'Progress' ? data.raw_vehicleno : data.vehicleNumber,
       vehicleNumberRemark: data.numberPlateRemark || '',
@@ -257,7 +257,7 @@ export class AiTollVerificationComponent {
       vehicleFrontAnalysisType: flag == 'Progress' ? data?.front_class_name : data?.aI_VehicleType,
       vehicleFrontAnalysisRemark: data.frontVehicleRemark || '',
       TopVehicleDetected: data.topVehicleDetected || 'Yes',
-      TopAnalysis: data.topAnalysis == 'No' ? data.topAnalysis : 'Yes',
+      TopAnalysis: data.topAnalysis == 'Yes' ? data.topAnalysis : 'No',
       TopAnalysissubCategoryType: flag == 'Progress' ? data.top_class_name.toLowerCase() : data?.aI_SubCategory,
       TopAnalysisRemark: data.topVehicleRemark || '',
       AI_Toll_VerificationRemark: data.aI_Toll_VerificationRemark || ''
@@ -379,7 +379,7 @@ export class AiTollVerificationComponent {
       this.updateFrom.get('vehicleNumberInput').enable();
       // this.updateFrom.get('vehicleNumberDetected').disable();
     } else {
-      this.updateFrom.controls['vehicleNumberInput'].setValue(obj?.vehicle_OriginalNo ? obj?.vehicle_OriginalNo : obj?.vehicleno);
+      this.updateFrom.controls['vehicleNumberInput'].setValue(obj?.raw_vehicleno ? obj?.raw_vehicleno : obj?.raw_vehicleno);
       this.updateFrom.get('vehicleNumberInput').disable();
       // this.updateFrom.get('vehicleNumberDetected').enable();
     }
